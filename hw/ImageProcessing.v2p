@@ -1,0 +1,40 @@
+ProjectName ImageProcessing
+Files {
+	 Schematics {
+		{$PRJDIR/schematics/Arria10_top.h}
+	 } 
+	 Sources {
+		{$PRJDIR/main_Arria10.cpp}
+		{$VISTA_ROOT/platforms/Arria10/Arria_models/MemoryFireWall.cpp}
+		{$PRJDIR/fswebcam/dec_bayer.c}
+	 } 
+	 {Public Headers} {
+		{$VISTA_ROOT/platforms/Arria10/Arria_models/MemoryFireWall.h}
+	 } 
+	 Models {
+		{$PRJDIR/models/FPGA_AXI_BUS.mb}
+		{$PRJDIR/models/LinuxFrameBufferDisplay.mb}
+	 } 
+}
+Designs {{$PRJDIR/main_Arria10.cpp}}
+Folders {
+	 Sources {*.c *.cpp *.C *.cxx *.cc} 
+	 {Public Headers} {*.h *.hpp *.H *.hxx *.hh} 
+	 Models *.mb 
+	 Schematics {} 
+	 Documentation {*.txt *.TXT *.doc *.DOC *.pdf *.PDF *.html *.HTML *.htm *.HTM *.ps *.PS} 
+	 {Linked Binaries} {*.o *.a *.so} 
+	 {Other Binaries} {*.exe *.x} 
+}
+GeneralCompilationOptions -Wall
+AlwaysCompileInCPPMode 1
+LinkPackages {Arria10_catalogue Arria10 models_catalogue model_builder}
+ProjectLibraryType archive
+ProjectComponentsLibraryPath {$PRJDIR/$PRJFILE_BASENAME/interfaces}
+ProjectWorkingDirectory {$PRJDIR/$PRJFILE_BASENAME/build}
+HasTLMSupport 0
+CompiledWithTLMSupport 0
+IsUsePathVariables 1
+PlatformName ImageProcessing
+ProjectReadOnly 0
+ProjectBuildMultiPlatform 0

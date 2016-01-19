@@ -1,0 +1,18 @@
+@include $env(VISTA_ROOT)/platforms/Arria10/parameters_$env(VISTA_PLATFORM_NAME).txt
+
+Arria10_top.Arria10_soc_inst.CORTEX_A9MP.PV.cpu0.core.elf_image_file    = ../sw/buildsocvpelf/linux-system-sd.elf
+Arria10_top.Arria10_soc_inst.SDMMC.image_file =  ../sw/buildsocvpsd/sd-angstrom-v2014.12-arria10swvp.img
+
+#                                                                 0xC0000000 (start of FPGA AXI)
+Arria10_top.fpga_axi_bus.FrameBufferMaster_base_address         = 0x00000000   
+Arria10_top.fpga_axi_bus.FrameBufferMaster_size                 = 0x10000000
+
+
+Arria10_top.fb.refresh  = 50    # MS = 20 frames per second
+Arria10_top.fb.width    = 800
+Arria10_top.fb.height   = 600
+
+Arria10_top.Console0.connected = 0
+
+# trace_script = trace.tcl
+
