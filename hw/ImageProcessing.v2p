@@ -6,7 +6,6 @@ Files {
 	 Sources {
 		{$PRJDIR/main_Arria10.cpp}
 		{$VISTA_ROOT/platforms/Arria10/Arria_models/MemoryFireWall.cpp}
-		{$PRJDIR/fswebcam/dec_bayer.c}
 	 } 
 	 {Public Headers} {
 		{$VISTA_ROOT/platforms/Arria10/Arria_models/MemoryFireWall.h}
