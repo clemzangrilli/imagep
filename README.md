@@ -8,7 +8,7 @@ From a fresh git clone these steps will let you run the demo.
 - Under hw execute
   - make mb
   - make
-  - vista_simulate Arria10
+  - make run
 
 Assuming everything went smoothly this should boot linux and open the framebuffer.
 
