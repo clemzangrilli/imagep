@@ -1,0 +1,1 @@
+./build.sh /store/data/altera_work/3.10-r1/git/arch/arm/boot/zImage /store/data/altera_work/3.10-r1/git/arch/arm/boot/dts/socfpga_arria10_swvp.dtb linux-system-sd.elf arm-none-eabi-
