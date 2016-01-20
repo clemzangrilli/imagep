@@ -8,8 +8,8 @@ template "/TLM/Generic_Library/Bus"
 # === ports ===
 add_port "FPGAmaster" /TLM/protocols/axi master 128 -bind_mode mandatory
 add_port "FPGAslave" /TLM/protocols/axi slave 128 -bind_mode mandatory
-add_port "LWHPslave" /TLM/protocols/axi slave 32 -bind_mode optional
 add_port "FrameBufferMaster" /TLM/protocols/axi master 128 -bind_mode mandatory
+add_port "ImageCaptureMaster" /TLM/protocols/axi master 128 -bind_mode mandatory
 
 # === parameters ===
 # usage: add_parameter <parameter_name> <default_value> <type:string|unsigned|int>
@@ -35,8 +35,6 @@ set_auto_parameter_default "FPGAmaster_additional_ranges" {""} string {}
 set_auto_parameter_default "FPGAmaster_latency" 0 uint32 {}
 set_auto_parameter_default "FPGAslave_priority" 0 uint32 {}
 set_auto_parameter_default "FPGAslave_vmap" {""} string {}
-set_auto_parameter_default "LWHPslave_priority" 0 uint32 {}
-set_auto_parameter_default "LWHPslave_vmap" {""} string {}
 set_auto_parameter_default "FrameBufferMaster_priority" 0 uint32 {}
 set_auto_parameter_default "FrameBufferMaster_base_address" 0 uint64 {}
 set_auto_parameter_default "FrameBufferMaster_size" 0 uint64 {}
@@ -44,6 +42,13 @@ set_auto_parameter_default "FrameBufferMaster_subtract_base_address" 1 uint32 {0
 set_auto_parameter_default "FrameBufferMaster_secure" 0 uint32 {0 1}
 set_auto_parameter_default "FrameBufferMaster_additional_ranges" {""} string {}
 set_auto_parameter_default "FrameBufferMaster_latency" 0 uint32 {}
+set_auto_parameter_default "ImageCaptureMaster_priority" 0 uint32 {}
+set_auto_parameter_default "ImageCaptureMaster_base_address" 0 uint64 {}
+set_auto_parameter_default "ImageCaptureMaster_size" 0 uint64 {}
+set_auto_parameter_default "ImageCaptureMaster_subtract_base_address" 1 uint32 {0 1}
+set_auto_parameter_default "ImageCaptureMaster_secure" 0 uint32 {0 1}
+set_auto_parameter_default "ImageCaptureMaster_additional_ranges" {""} string {}
+set_auto_parameter_default "ImageCaptureMaster_latency" 0 uint32 {}
 
 # === generics ===
 # usage: add_generic <generic_name> <value>
@@ -53,9 +58,7 @@ set_auto_parameter_default "FrameBufferMaster_latency" 0 uint32 {}
 add_delay_policy FPGAslave 0 -latency 0 -sync 1 -power 0
 add_pipeline_policy FPGAmaster FPGAslave -latency FPGAmaster_latency -buffer_size 0 -sync 1 -power 0
 add_pipeline_policy FrameBufferMaster FPGAslave -latency FrameBufferMaster_latency -buffer_size 0 -sync 1 -power 0
-add_delay_policy LWHPslave 0 -latency 0 -sync 1 -power 0
-add_pipeline_policy FPGAmaster LWHPslave -latency FPGAmaster_latency -buffer_size 0 -sync 1 -power 0
-add_pipeline_policy FrameBufferMaster LWHPslave -latency FrameBufferMaster_latency -buffer_size 0 -sync 1 -power 0
+add_pipeline_policy ImageCaptureMaster FPGAslave -latency ImageCaptureMaster_latency -buffer_size 0 -sync 1 -power 0
 
 # === generate options ===
 set_generate_kind "pvt" ;# should be one of: model|pv|pvt

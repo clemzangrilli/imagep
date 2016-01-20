@@ -7,6 +7,9 @@ Arria10_top.Arria10_soc_inst.SDMMC.image_file =  ../sw/buildsocvpsd/sd-angstrom-
 Arria10_top.fpga_axi_bus.FrameBufferMaster_base_address         = 0x00000000   
 Arria10_top.fpga_axi_bus.FrameBufferMaster_size                 = 0x10000000
 
+Arria10_top.fpga_axi_bus.ImageCaptureMaster_base_address        = 0x10000000   
+Arria10_top.fpga_axi_bus.ImageCaptureMaster_size                = 0x00001000
+
 
 Arria10_top.fb.refresh  = 50    # MS = 20 frames per second
 Arria10_top.fb.width    = 800

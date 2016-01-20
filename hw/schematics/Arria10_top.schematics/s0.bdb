@@ -13,7 +13,7 @@
  } 
  page  { w 11000 h 11000 type vhdstd orient portr  } 
 grid 10 
- } #idit - save unit (named Arria10_top while saving) on Fri Jan 15 15:32:56 2016
+ } #idit - save unit (named Arria10_top while saving) on Wed Jan 20 11:05:03 2016
 #SW version: 2008.12 v4.1.1.beta2 build 1. Date: Jan  3 2016. License: 1.1 
 version: 12 
 ipxactvendor Mentor.com 
@@ -1758,11 +1758,11 @@ none @block  1
 } @gr DEF @idx -1 } L { @bl -1 @el -1 @il -1 @nvis } !
 @blist 1 { @cnt 0 } @flags 73 }
 
-sympinel {  text { 507 -1107 1 irq_19
+sympinel {  text { 778 -337 1 irq_19
  angle 0
 fn 0 0 160 2 5 0 0 0 0 }
-invert FALSE visible TRUE typepin 0 pin { 500 -1100 } 
- {  end  480 -1100  } 
+invert FALSE visible TRUE typepin 0 pin { 820 -330 } 
+ {  end  840 -330  } 
  } 
 @spattr {
 @plist 1 
@@ -4468,7 +4468,7 @@ none @block  1
 } @gr DEF @idx -1 } @blist 0 } !
 @useCtor -1 @freeCtrorAruments 1 %Name%
 L { @nvis } !
-@prtas 6 -
+@prtas 7 -
 1 sigIdx
 0 UART1_TX
 -
@@ -4486,6 +4486,9 @@ L { @nvis } !
 -
 11 sigIdx
 0 HPS2FPGA_AXI_Master
+-
+18 sigIdx
+0 irq_19
 152 
 { @pdecl { { @n I2C0_Master @t - @bnd -
 @das -
@@ -6303,25 +6306,6 @@ none @block -
 } @gr DEF @idx -1 } L { @bl -1 @el -1 @il -1 @nvis } !
 @blist 1 { @cnt 0 } @flags 73 }
 
-sympinel {  text { 917 -637 1 LWHPslave
- angle 0
-fn 0 0 160 2 5 0 0 0 0 }
-invert FALSE visible TRUE typepin 0 pin { 910 -630 } 
- {  end  890 -630  } 
- } 
-@spattr {
-@plist 1 
-{ @pdecl { { @n LWHPslave @t - @bnd -
-@das -
-@nregout @skind
-none @block -
-@ch -
-} @md socketTarget @iv -
-@sysInt pvt_target_socket<32U,axi_protocol_types,1,sc_core::SC_ZERO_OR_MORE_BOUND>
-@multiport 1 @isTemplate 0
-} @gr DEF @idx -1 } L { @bl -1 @el -1 @il -1 @nvis } !
-@blist 1 { @cnt 0 } @flags 73 }
-
 sympinel {  text { 988 -747 1 FrameBufferMaster
  angle 0
 fn 0 0 160 2 5 0 0 0 0 }
@@ -6341,16 +6325,35 @@ none @block -
 } @gr DEF @idx -1 } L { @bl -1 @el -1 @il -1 @nvis } !
 @blist 1 { @cnt 0 } @flags 73 }
 
+sympinel {  text { 978 -637 1 ImageCaptureMaster
+ angle 0
+fn 0 0 160 2 5 0 0 0 0 }
+invert FALSE visible TRUE typepin 0 pin { 1100 -630 } 
+ {  end  1120 -630  } 
+ } 
+@spattr {
+@plist 1 
+{ @pdecl { { @n ImageCaptureMaster @t - @bnd -
+@das -
+@nregout @skind
+none @block -
+@ch -
+} @md socketInitiator @iv -
+@sysInt pvt_initiator_socket<128U,axi_protocol_types,1,sc_core::SC_ONE_OR_MORE_BOUND>
+@multiport 1 @isTemplate 0
+} @gr DEF @idx -1 } L { @bl -1 @el -1 @il -1 @nvis } !
+@blist 1 { @cnt 0 } @flags 73 }
+
  } 
 angle 0 bcol 'Pale Blue2' pcol 'Black' } 
  } 
-text { 953 -548 1 fpga_axi_bus
+text { 969 -511 1 fpga_axi_bus
  angle 0
 fn 0 0 160 2 5 0 0 0 0 }
-gnrtxt textbox { rect { 970 -538 98 16 
+gnrtxt textbox { rect { 970 -538 96 17 
 bcol 'Empty' pcol 'Red' } 
 fmttext { 972 -535 1 8 nil 
-  "fpga_axi_bus"  
+  "fpga_axi_bus" 
 angle 0 fn 0 0 0 2 5 0 0 0 0 }
  invis }  } 
 @conf
@@ -6376,15 +6379,15 @@ none @block -
 } @md socketTarget @iv -
 @sysInt pvt_target_socket<128U,axi_protocol_types,1,sc_core::SC_ONE_OR_MORE_BOUND>
 @multiport 1 @isTemplate 0
-} @gr DEF @idx -1 } @blist 0 } { @port { @pdecl { { @n LWHPslave @t - @bnd -
+} @gr DEF @idx -1 } @blist 0 } { @port { @pdecl { { @n FrameBufferMaster @t - @bnd -
 @das -
 @nregout @skind
 none @block -
 @ch -
-} @md socketTarget @iv -
-@sysInt pvt_target_socket<32U,axi_protocol_types,1,sc_core::SC_ZERO_OR_MORE_BOUND>
+} @md socketInitiator @iv -
+@sysInt pvt_initiator_socket<128U,axi_protocol_types,1,sc_core::SC_ONE_OR_MORE_BOUND>
 @multiport 1 @isTemplate 0
-} @gr DEF @idx -1 } @blist 0 } { @port { @pdecl { { @n FrameBufferMaster @t - @bnd -
+} @gr DEF @idx -1 } @blist 0 } { @port { @pdecl { { @n ImageCaptureMaster @t - @bnd -
 @das -
 @nregout @skind
 none @block -
@@ -6395,7 +6398,7 @@ none @block -
 } @gr DEF @idx -1 } @blist 0 } !
 @procTypeSel 1 @useCtor -1 @freeCtrorAruments 1 %Name%
 L { @nvis } !
-@prtas 3 -
+@prtas 4 -
 9 sigIdx
 0 FPGAmaster
 -
@@ -6404,6 +6407,9 @@ L { @nvis } !
 -
 15 sigIdx
 0 FrameBufferMaster
+-
+17 sigIdx
+0 ImageCaptureMaster
 4 
 { @pdecl { { @n FPGAmaster @t - @bnd -
 @das -
@@ -6421,15 +6427,15 @@ none @block -
 } @md socketTarget @iv -
 @sysInt pvt_target_socket<128U,axi_protocol_types,1,sc_core::SC_ONE_OR_MORE_BOUND>
 @multiport 1 @isTemplate 0
-} @gr DEF @idx -1 } { @pdecl { { @n LWHPslave @t - @bnd -
+} @gr DEF @idx -1 } { @pdecl { { @n FrameBufferMaster @t - @bnd -
 @das -
 @nregout @skind
 none @block -
 @ch -
-} @md socketTarget @iv -
-@sysInt pvt_target_socket<32U,axi_protocol_types,1,sc_core::SC_ZERO_OR_MORE_BOUND>
+} @md socketInitiator @iv -
+@sysInt pvt_initiator_socket<128U,axi_protocol_types,1,sc_core::SC_ONE_OR_MORE_BOUND>
 @multiport 1 @isTemplate 0
-} @gr DEF @idx -1 } { @pdecl { { @n FrameBufferMaster @t - @bnd -
+} @gr DEF @idx -1 } { @pdecl { { @n ImageCaptureMaster @t - @bnd -
 @das -
 @nregout @skind
 none @block -
@@ -6521,6 +6527,136 @@ none @block -
 @ch -
 } @md socketTarget @iv -
 @sysInt pvt_target_socket<128U,axi_protocol_types,1,sc_core::SC_ONE_OR_MORE_BOUND>
+@multiport 1 @isTemplate 0
+} @gr DEF @idx -1 } L { @bl -1 @el -1 @il -1 @nvis } !
+0 L { @nvis @ctorsn 1 } !
+@hastemplparam
+{ @cnt 0 } @instanceAs 1 
+comp { compsym { comptype 0 macDesign 0 behav Normal macrodir UpDown scheme SIM flat TRUE initialize FALSE dataWidth 0 addrWidth 0 endianMode 0 macroinit 0 doset { textbox { rect { 1231 -654 81 17 
+bcol 'Empty' pcol 'Black' } 
+fmttext { 1233 -651 1 8 nil 
+ImageCapture 
+angle 0 fn 0 0 0 2 5 0 0 0 0 }
+ vis }  { fiv  @kind 9 
+ } 
+groupobj { doset { rect { 1190 -660 160 80 
+bcol 'Empty' pcol 'Black' } 
+ } 
+clshapes { closeShape { lines { line { 1190 -580 1349 -580 } 
+line { 1349 -580 1349 -660 } 
+line { 1349 -660 1508 -660 } 
+line { 1190 -660 1190 -740 } 
+} 
+arcs { } 
+bcol 'Pale Blue2'  } 
+closeShape { lines { line { 1190 -660 1350 -660 } 
+line { 1350 -660 1350 -580 } 
+line { 1350 -580 1190 -580 } 
+line { 1190 -580 1190 -660 } 
+} 
+arcs { } 
+bcol 'Empty'  } 
+ } 
+ } 
+ } 
+pinset { sympinel {  text { 1197 -637 1 from_bus
+ angle 0
+fn 0 0 160 2 5 0 0 0 0 }
+invert FALSE visible TRUE typepin 0 pin { 1190 -630 } 
+ {  end  1170 -630  } 
+ } 
+@spattr {
+@plist 1 
+{ @pdecl { { @n from_bus @t - @bnd -
+@das -
+@nregout @skind
+none @block -
+@ch -
+} @md socketTarget @iv -
+@sysInt pvt_target_socket<128U,axi_protocol_types,1,sc_core::SC_ONE_OR_MORE_BOUND>
+@multiport 1 @isTemplate 0
+} @gr DEF @idx -1 } L { @bl -1 @el -1 @il -1 @nvis } !
+@blist 1 { @cnt 0 } @flags 73 }
+
+sympinel {  text { 1323 -650 1 interrupt
+ angle 900
+fn 0 0 160 2 5 0 0 0 0 }
+invert FALSE visible TRUE typepin 0 pin { 1330 -580 } 
+ {  end  1330 -560  } 
+ } 
+@spattr {
+@plist 1 
+{ @pdecl { { @n interrupt @t - @bnd -
+@das -
+@nregout @skind
+none @block -
+@ch -
+} @md socketInitiator @iv -
+@sysInt pvt_initiator_socket<1U,tlm::tlm_base_protocol_types,1,sc_core::SC_ONE_OR_MORE_BOUND>
+@multiport 1 @isTemplate 0
+} @gr DEF @idx -1 } L { @bl -1 @el -1 @il -1 @nvis } !
+@blist 1 { @cnt 0 } @flags 73 }
+
+ } 
+angle 0 bcol 'Empty' pcol 'Black' } 
+ } 
+text { 1258 -575 1 ic
+ angle 0
+fn 0 0 160 2 5 0 0 0 0 }
+gnrtxt textbox { rect { 1180 -238 34 16 
+bcol 'Empty' pcol 'Red' } 
+fmttext { 1182 -235 1 8 nil 
+  "ic"  
+angle 0 fn 0 0 0 2 5 0 0 0 0 }
+ invis }  } 
+@conf
+- - @symname
+- @cmpattr
+@kwd @innm ic @arch - @usl - @hrnm ImageCapture models @dffs 0 0 @stt hier @gnras @cnt 0
+@templparamas @templparamcnt 0
+@portas @cnt 0
+@portlist 2 
+{ @port { @pdecl { { @n from_bus @t - @bnd -
+@das -
+@nregout @skind
+none @block -
+@ch -
+} @md socketTarget @iv -
+@sysInt pvt_target_socket<128U,axi_protocol_types,1,sc_core::SC_ONE_OR_MORE_BOUND>
+@multiport 1 @isTemplate 0
+} @gr DEF @idx -1 } @blist 0 } { @port { @pdecl { { @n interrupt @t - @bnd -
+@das -
+@nregout @skind
+none @block -
+@ch -
+} @md socketInitiator @iv -
+@sysInt pvt_initiator_socket<1U,tlm::tlm_base_protocol_types,1,sc_core::SC_ONE_OR_MORE_BOUND>
+@multiport 1 @isTemplate 0
+} @gr DEF @idx -1 } @blist 0 } !
+@procTypeSel 1 @useCtor -1 @freeCtrorAruments 1 %Name%
+L { @nvis } !
+@prtas 2 -
+16 sigIdx
+0 from_bus
+-
+19 sigIdx
+0 interrupt
+2 
+{ @pdecl { { @n from_bus @t - @bnd -
+@das -
+@nregout @skind
+none @block -
+@ch -
+} @md socketTarget @iv -
+@sysInt pvt_target_socket<128U,axi_protocol_types,1,sc_core::SC_ONE_OR_MORE_BOUND>
+@multiport 1 @isTemplate 0
+} @gr DEF @idx -1 } { @pdecl { { @n interrupt @t - @bnd -
+@das -
+@nregout @skind
+none @block -
+@ch -
+} @md socketInitiator @iv -
+@sysInt pvt_initiator_socket<1U,tlm::tlm_base_protocol_types,1,sc_core::SC_ONE_OR_MORE_BOUND>
 @multiport 1 @isTemplate 0
 } @gr DEF @idx -1 } L { @bl -1 @el -1 @il -1 @nvis } !
 0 L { @nvis @ctorsn 1 } !
@@ -6883,14 +7019,117 @@ s7
 @channeltype -
 -
 0 
+signal { F bind line90 { 0 4 2 1120 -630  1120 -630  1170 -630 bcol 'Empty' pcol 'Black' 
+ Firstpin {
+  blockpin {   nnvis  pnvis pin { 1170 -630 } 
+ } 
+10 16 -1 -
+-
+@intrfclass
+{ -name- 
+tlm::tlm_target_socket<>
+0 0 withTemplate 1 0 multiport 1 } 
+@initialization
+%Name%
+0 
+
+ } 
+
+ Secondpin {
+  blockpin {   nnvis  pnvis pin { 1120 -630 } 
+ } 
+11 17 -1 -
+-
+@intrfclass
+{ -name- 
+tlm::tlm_initiator_socket<>
+0 0 withTemplate 1 0 multiport 1 } 
+@initialization
+%Name%
+0 
+
+ } 
+ SourceIdx 3 
+ DestIdx 5 
+ } 
+ } 
+@BIND
+@kwd
+@iv
+-
+@strngth
+none @exprng
+none @dly
+-
+@sidx
+-1 @attr
+s8
+@newportclass
+-
+@dt -
+@channeltype -
+-
+0 
+signal { F bind line90 { 0 4 2 1330 -560  1330 -330  840 -330 bcol 'Empty' pcol 'Black' 
+ Firstpin {
+  blockpin {   nnvis  pnvis pin { 840 -330 } 
+ } 
+10 18 -1 -
+-
+@intrfclass
+{ -name- 
+tlm::tlm_target_socket<>
+0 0 withTemplate 1 0 multiport 1 } 
+@initialization
+%Name%
+0 
+
+ } 
+
+ Secondpin {
+  blockpin {   nnvis  pnvis pin { 1330 -560 } 
+ } 
+11 19 -1 -
+-
+@intrfclass
+{ -name- 
+tlm::tlm_initiator_socket<>
+0 0 withTemplate 1 0 multiport 1 } 
+@initialization
+%Name%
+0 
+
+ } 
+ SourceIdx 5 
+ DestIdx 0 
+ } 
+ } 
+@BIND
+@kwd
+@iv
+-
+@strngth
+none @exprng
+none @dly
+-
+@sidx
+-1 @attr
+s9
+@newportclass
+-
+@dt -
+@channeltype -
+-
+0 
 !
 
-@@VE@names@@ 12 @obj - fb 36 @obj - Console0 36 @obj - Console1 36 @obj - s0 13 @obj - s1 13 @obj - s2 13 @obj - s3 13 @obj - s4 13 @obj - fpga_axi_bus 36 @obj - s5 13 @obj - s7 13 
-@obj - Arria10_soc_inst 36 23 7 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 15 6 -1 -1 -1 -1 -1 -1 -1 -1 -1 15 !
+@@VE@names@@ 15 @obj - fb 36 @obj - Console0 36 @obj - Console1 36 @obj - ic 36 @obj - s0 13 @obj - s1 13 @obj - s2 13 @obj - s3 13 @obj - s4 13 @obj - fpga_axi_bus 36 @obj - s5 13 
+@obj - s7 13 @obj - s8 13 @obj - s9 13 @obj - Arria10_soc_inst 36 23 9 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 19 9 -1 -1 -1 -1 -1 -1 -1 -1 -1 19 !
 
 @@VE@obj_u@@ Arria10_soc_inst Arria10_soc Arria_schematics 0 
 Console0 CONSOLE Models_Catalogue 0 
 Console1 CONSOLE Models_Catalogue 0 
 fpga_axi_bus FPGA_AXI_BUS models 0 
 fb LinuxFrameBufferDisplay models 0 
+ic ImageCapture models 0 
 !

@@ -6,6 +6,7 @@ $includes_begin;
 #include "Arria_schematics/Arria10_soc.h"
 #include "../models/FPGA_AXI_BUS_model.h"
 #include "../models/LinuxFrameBufferDisplay_model.h"
+#include "../models/ImageCapture_model.h"
 $includes_end;
 
 $module_begin("Arria10_top");
@@ -30,6 +31,9 @@ $end
 $init("fb"),
 fb(0)
 $end
+$init("ic"),
+ic(0)
+$end
     $initialization_end
 {
     $elaboration_begin;
@@ -47,6 +51,9 @@ fpga_axi_bus = new FPGA_AXI_BUS_pvt("fpga_axi_bus");
 $end;
 $create_component("fb");
 fb = new LinuxFrameBufferDisplay_pvt("fb");
+$end;
+$create_component("ic");
+ic = new ImageCapture_pvt("ic");
 $end;
 $bind("Console1->TX","Arria10_soc_inst->UART1_RX");
 vista_bind(Console1->TX, Arria10_soc_inst->UART1_RX);
@@ -68,6 +75,12 @@ vista_bind(fpga_axi_bus->FPGAmaster, Arria10_soc_inst->FPGA2HPS_AXI_slave);
 $end;
 $bind("fpga_axi_bus->FrameBufferMaster","fb->from_bus");
 vista_bind(fpga_axi_bus->FrameBufferMaster, fb->from_bus);
+$end;
+$bind("fpga_axi_bus->ImageCaptureMaster","ic->from_bus");
+vista_bind(fpga_axi_bus->ImageCaptureMaster, ic->from_bus);
+$end;
+$bind("ic->interrupt","Arria10_soc_inst->irq_19");
+vista_bind(ic->interrupt, Arria10_soc_inst->irq_19);
 $end;
     $elaboration_end;
   $vlnv_assign_begin;
@@ -93,6 +106,9 @@ $end;
 $destruct_component("fb");
 delete fb; fb = 0;
 $end;
+$destruct_component("ic");
+delete ic; ic = 0;
+$end;
     $destructor_end;
   }
 public:
@@ -111,6 +127,9 @@ FPGA_AXI_BUS_pvt *fpga_axi_bus;
 $end;
 $component("fb");
 LinuxFrameBufferDisplay_pvt *fb;
+$end;
+$component("ic");
+ImageCapture_pvt *ic;
 $end;
   $fields_end;
   $vlnv_decl_begin;
