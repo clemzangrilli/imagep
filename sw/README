@@ -1,0 +1,8 @@
+kernel_patches contains changes to kernel.
+kernel is a copy of the Altera Angstrom kernel source.
+
+kernel_patches/arch/arm/boot/dts/socfpga_arria10_swvp.dts has been modified to add
+a number of user HW elements instantiated in the FPGA fabric.
+Run kernel/setup.sh to rebuild the kernel, then buildsocvpelf/run.txt to recreate the elf image.
+
+User program examples accessing custom HW elements are under jpeg and imagecapture dirs.
