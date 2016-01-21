@@ -5,7 +5,7 @@ export CROSS_COMPILE=$TOOL_CHAIN/bin/$TARGET-
 export ARCH=arm
 
 if [ ! -f linux-socfpga.tar.xz ]; then
-	wget ftp://mentorweb/pub/a10ip/linux-socfpga.tar.xz
+	wget ftp://mentorweb.wv.mentorg.com/pub/a10ip/linux-socfpga.tar.xz
 fi
 
 if [ ! -d linux-socfpga ]; then
