@@ -12,3 +12,11 @@ From a fresh git clone these steps will let you run the demo.
 
 Assuming everything went smoothly this should boot linux and open the framebuffer.
 
+
+
+sudo apt-get install libgd-dev
+
+
+wget https://releases.linaro.org/archive/13.12/components/toolchain/binaries/gcc-linaro-arm-linux-gnueabihf-4.8-2013.12_linux.tar.bz2
+
+
