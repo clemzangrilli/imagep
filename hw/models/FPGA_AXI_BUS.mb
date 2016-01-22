@@ -10,6 +10,9 @@ add_port "FPGAmaster" /TLM/protocols/axi master 128 -bind_mode mandatory
 add_port "FPGAslave" /TLM/protocols/axi slave 128 -bind_mode mandatory
 add_port "FrameBufferMaster" /TLM/protocols/axi master 128 -bind_mode mandatory
 add_port "ImageCaptureMaster" /TLM/protocols/axi master 128 -bind_mode mandatory
+add_port "JPEGregisters" /TLM/protocols/axi master 128 -bind_mode mandatory
+add_port "JPEGdma" /TLM/protocols/axi slave 128 -bind_mode mandatory
+add_port "FPGAmem" /TLM/protocols/axi master 128 -bind_mode mandatory
 
 # === parameters ===
 # usage: add_parameter <parameter_name> <default_value> <type:string|unsigned|int>
@@ -49,6 +52,22 @@ set_auto_parameter_default "ImageCaptureMaster_subtract_base_address" 1 uint32 {
 set_auto_parameter_default "ImageCaptureMaster_secure" 0 uint32 {0 1}
 set_auto_parameter_default "ImageCaptureMaster_additional_ranges" {""} string {}
 set_auto_parameter_default "ImageCaptureMaster_latency" 0 uint32 {}
+set_auto_parameter_default "JPEGregisters_priority" 0 uint32 {}
+set_auto_parameter_default "JPEGregisters_base_address" 0 uint64 {}
+set_auto_parameter_default "JPEGregisters_size" 0 uint64 {}
+set_auto_parameter_default "JPEGregisters_subtract_base_address" 1 uint32 {0 1}
+set_auto_parameter_default "JPEGregisters_secure" 0 uint32 {0 1}
+set_auto_parameter_default "JPEGregisters_additional_ranges" {""} string {}
+set_auto_parameter_default "JPEGregisters_latency" 0 uint32 {}
+set_auto_parameter_default "JPEGdma_priority" 0 uint32 {}
+set_auto_parameter_default "JPEGdma_vmap" {""} string {}
+set_auto_parameter_default "FPGAmem_priority" 0 uint32 {}
+set_auto_parameter_default "FPGAmem_base_address" 0 uint64 {}
+set_auto_parameter_default "FPGAmem_size" 0 uint64 {}
+set_auto_parameter_default "FPGAmem_subtract_base_address" 1 uint32 {0 1}
+set_auto_parameter_default "FPGAmem_secure" 0 uint32 {0 1}
+set_auto_parameter_default "FPGAmem_additional_ranges" {""} string {}
+set_auto_parameter_default "FPGAmem_latency" 0 uint32 {}
 
 # === generics ===
 # usage: add_generic <generic_name> <value>
