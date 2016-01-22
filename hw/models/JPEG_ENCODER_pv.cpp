@@ -35,6 +35,7 @@ using namespace std;
 //constructor
 JPEG_ENCODER_pv::JPEG_ENCODER_pv(sc_module_name module_name) 
   : JPEG_ENCODER_pv_base(module_name) {
+  irq.initialize (false);
 }   
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -46,9 +47,18 @@ JPEG_ENCODER_pv::JPEG_ENCODER_pv(sc_module_name module_name)
 // Write callback for start register.
 // The newValue has been already assigned to the start register.
 void JPEG_ENCODER_pv::cb_write_start(unsigned long long newValue) {
+  unsigned char d;
 
-  cout << sc_time_stamp() <<": "<< name() <<"cb_write_start received "<< start <<", "<< newValue << endl;
-  
+  cout << sc_time_stamp() <<": "<< name() <<"cb_write_start received "<< start << endl;
+
+  if (start == 0) {
+   irq.write(false); 
+  } else {
+   master_read(inputaddr, &d, 1);
+   d++;
+   master_write(outputaddr, d);
+   irq.write(true); 
+  }
 }
     
 

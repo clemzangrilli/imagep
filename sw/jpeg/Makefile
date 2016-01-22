@@ -6,7 +6,7 @@ CC = ${CROSS_COMPILER}gcc
 jpeg: jpeg.c
 	${CC} jpeg.c -o jpeg -mfloat-abi=hard
 
-scp:
+scp: jpeg
 	scp -P 9547 jpeg root@localhost:/home/root/jpeg
 
 clean:

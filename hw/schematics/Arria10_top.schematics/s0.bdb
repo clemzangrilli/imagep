@@ -13,7 +13,7 @@
  } 
  page  { w 11000 h 11000 type vhdstd orient portr  } 
 grid 10 
- } #idit - save unit (named Arria10_top while saving) on Fri Jan 22 10:15:32 2016
+ } #idit - save unit (named Arria10_top while saving) on Fri Jan 22 14:15:45 2016
 #SW version: 2008.12 v4.1.1.beta2 build 1. Date: Jan 18 2016. License: 1.1 
 version: 12 
 ipxactvendor Mentor.com 
@@ -6251,7 +6251,7 @@ none @block -
 0 L { @nvis @ctorsn 1 } !
 @hastemplparam
 { @cnt 0 } @instanceAs 1 
-comp { compsym { comptype 0 macDesign 0 behav Normal macrodir UpDown scheme SIM flat TRUE initialize FALSE dataWidth 0 addrWidth 0 endianMode 0 macroinit 0 doset { textbox { rect { 947 -1017 94 18 
+comp { compsym { comptype 0 macDesign 0 behav Normal macrodir UpDown scheme SIM flat TRUE initialize FALSE dataWidth 0 addrWidth 0 endianMode 0 macroinit 0 doset { textbox { rect { 948 -974 94 18 
 bcol 'Empty' pcol 'Black' } 
 fmttext { 950 -971 1 8 nil 
 FPGA_AXI_BUS 
@@ -6410,10 +6410,10 @@ angle 0 bcol 'Pale Blue2' pcol 'Black' }
 text { 979 -511 1 fpga_axi_bus
  angle 0
 fn 0 0 160 2 5 0 0 0 0 }
-gnrtxt textbox { rect { 970 -538 93 17 
+gnrtxt textbox { rect { 970 -538 92 18 
 bcol 'Empty' pcol 'Red' } 
 fmttext { 972 -535 1 8 nil 
-  "fpga_axi_bus"  
+  "fpga_axi_bus" 
 angle 0 fn 0 0 0 2 5 0 0 0 0 }
  invis }  } 
 @conf
@@ -6862,10 +6862,10 @@ angle 0 bcol 'Pale Blue2' pcol 'Black' }
 text { 1248 -498 1 jpeg
  angle 0
 fn 0 0 160 2 5 0 0 0 0 }
-gnrtxt textbox { rect { 1237 -465 43 17 
+gnrtxt textbox { rect { 1237 -465 42 18 
 bcol 'Empty' pcol 'Red' } 
 fmttext { 1239 -462 1 8 nil 
-  "jpeg"  
+  "jpeg" 
 angle 0 fn 0 0 0 2 5 0 0 0 0 }
  invis }  } 
 @conf
@@ -6985,10 +6985,10 @@ angle 0 bcol 'Pale Blue2' pcol 'Black' }
 text { 1215 -628 1 fpgamem
  angle 0
 fn 0 0 160 2 5 0 0 0 0 }
-gnrtxt textbox { rect { 1237 -595 70 17 
+gnrtxt textbox { rect { 1237 -595 69 18 
 bcol 'Empty' pcol 'Red' } 
 fmttext { 1239 -592 1 8 nil 
-  "fpgamem"  
+  "fpgamem" 
 angle 0 fn 0 0 0 2 5 0 0 0 0 }
  invis }  } 
 @conf
@@ -7642,7 +7642,6 @@ signal { F bind line90 { 0 4 2 1180 -670  1180 -670  1130 -670 bcol 'Empty' pcol
   blockpin {   nnvis  pnvis pin { 1130 -670 } 
  } 
 11 26 -1 -
-s13
 -
 @intrfclass
 { -name- 
@@ -7658,7 +7657,6 @@ tlm::tlm_target_socket<>
   blockpin {   nnvis  pnvis pin { 1180 -670 } 
  } 
 10 27 -1 -
-s13
 -
 @intrfclass
 { -name- 
@@ -7692,8 +7690,8 @@ s13
 0 
 !
 
-@@VE@names@@ 21 @obj - fb 36 @obj - Console0 36 @obj - Console1 36 @obj - ic 36 @obj - jpeg 36 @obj - s0 13 @obj - s1 13 @obj - s2 13 @obj - s10 13 @obj - s3 13 @obj - s11 13 
-@obj - s4 13 @obj - fpga_axi_bus 36 @obj - s12 13 @obj - s5 13 @obj - s13 13 @obj - s7 13 @obj - s8 13 @obj - s9 13 @obj - fpgamem 36 @obj - Arria10_soc_inst 36 
+@@VE@names@@ 21 @obj - fb 36 @obj - Console0 36 @obj - Console1 36 @obj - ic 36 @obj - jpeg 36 @obj - s0 13 @obj - s1 13 @obj - s2 13 @obj - s10 13 @obj - s3 13 @obj - fpga_axi_bus 36 
+@obj - s11 13 @obj - s4 13 @obj - s12 13 @obj - s5 13 @obj - s13 13 @obj - s7 13 @obj - s8 13 @obj - s9 13 @obj - fpgamem 36 @obj - Arria10_soc_inst 36 
 23 13 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 27 12 -1 -1 -1 -1 -1 -1 -1 -1 -1 27 !
 
 @@VE@obj_u@@ Arria10_soc_inst Arria10_soc Arria_schematics 0 
