@@ -1,7 +1,7 @@
 
-export TOOL_CHAIN=$(dirname $(dirname `which arm-none-eabi-gcc`))
-export TARGET=arm-none-eabi
-export CROSS_COMPILE=$TOOL_CHAIN/bin/$TARGET-
+export TOOL_CHAIN=../../../../linaro/gcc-linaro-arm-linux-gnueabihf-4.8-2013.12_linux/bin
+export TARGET=arm-linux-gnueabihf
+export CROSS_COMPILE=$TOOL_CHAIN/$TARGET-
 export ARCH=arm
 
 if [ ! -f linux-socfpga.tar.xz ]; then

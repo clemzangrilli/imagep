@@ -1,2 +1,2 @@
-./build.sh ../kernel/linux-socfpga/arch/arm/boot/zImage ../kernel/linux-socfpga/arch/arm/boot/dts/socfpga_arria10_swvp.dtb linux-system-sd.elf arm-none-eabi-
+PATH=../../../linaro/gcc-linaro-arm-linux-gnueabihf-4.8-2013.12_linux/bin\:$PATH ./build.sh ../kernel/linux-socfpga/arch/arm/boot/zImage ../kernel/linux-socfpga/arch/arm/boot/dts/socfpga_arria10_swvp.dtb linux-system-sd.elf arm-linux-gnueabihf-
 
