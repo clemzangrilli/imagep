@@ -7,6 +7,8 @@ $includes_begin;
 #include "../models/FPGA_AXI_BUS_model.h"
 #include "../models/LinuxFrameBufferDisplay_model.h"
 #include "../models/ImageCapture_model.h"
+#include "../models/JPEG_ENCODER_model.h"
+#include "../models/fpga_memory_model.h"
 $includes_end;
 
 $module_begin("Arria10_top");
@@ -34,6 +36,12 @@ $end
 $init("ic"),
 ic(0)
 $end
+$init("jpeg"),
+jpeg(0)
+$end
+$init("fpgamem"),
+fpgamem(0)
+$end
     $initialization_end
 {
     $elaboration_begin;
@@ -54,6 +62,12 @@ fb = new LinuxFrameBufferDisplay_pvt("fb");
 $end;
 $create_component("ic");
 ic = new ImageCapture_pvt("ic");
+$end;
+$create_component("jpeg");
+jpeg = new JPEG_ENCODER_pvt("jpeg");
+$end;
+$create_component("fpgamem");
+fpgamem = new fpga_memory_pvt("fpgamem");
 $end;
 $bind("Console1->TX","Arria10_soc_inst->UART1_RX");
 vista_bind(Console1->TX, Arria10_soc_inst->UART1_RX);
@@ -82,6 +96,18 @@ $end;
 $bind("ic->interrupt","Arria10_soc_inst->irq_19");
 vista_bind(ic->interrupt, Arria10_soc_inst->irq_19);
 $end;
+$bind("fpga_axi_bus->JPEGregisters","jpeg->slave");
+vista_bind(fpga_axi_bus->JPEGregisters, jpeg->slave);
+$end;
+$bind("jpeg->master","fpga_axi_bus->JPEGdma");
+vista_bind(jpeg->master, fpga_axi_bus->JPEGdma);
+$end;
+$bind("jpeg->irq","Arria10_soc_inst->irq_20");
+vista_bind(jpeg->irq, Arria10_soc_inst->irq_20);
+$end;
+$bind("fpga_axi_bus->FPGAmem","fpgamem->s");
+vista_bind(fpga_axi_bus->FPGAmem, fpgamem->s);
+$end;
     $elaboration_end;
   $vlnv_assign_begin;
 m_library = "schematics";
@@ -109,6 +135,12 @@ $end;
 $destruct_component("ic");
 delete ic; ic = 0;
 $end;
+$destruct_component("jpeg");
+delete jpeg; jpeg = 0;
+$end;
+$destruct_component("fpgamem");
+delete fpgamem; fpgamem = 0;
+$end;
     $destructor_end;
   }
 public:
@@ -130,6 +162,12 @@ LinuxFrameBufferDisplay_pvt *fb;
 $end;
 $component("ic");
 ImageCapture_pvt *ic;
+$end;
+$component("jpeg");
+JPEG_ENCODER_pvt *jpeg;
+$end;
+$component("fpgamem");
+fpga_memory_pvt *fpgamem;
 $end;
   $fields_end;
   $vlnv_decl_begin;

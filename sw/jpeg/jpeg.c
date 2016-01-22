@@ -6,12 +6,10 @@
 #include <errno.h>
 #include <sys/mman.h>
 
-#define JPEG_BASE 0xd8000000
-#define JPEG_REG_SIZE 0x1000
-#define JPEG_BUF_SIZE 0x1000000
-
-#define JPEG_SRC_OFFSET  0x1000000
-#define JPEG_DST_OFFSET  0x2000000
+#define JPEG_BASE     0xd0001000
+#define JPEG_REG_SIZE     0x1000
+#define JPEG_BUFFER   0xe0000000
+#define JPEG_BUF_SIZE 0x00200000
 
 typedef struct {
   unsigned source;
@@ -43,22 +41,14 @@ int main(void)
     if (!jpeg_reg) {
         printf("mmapn jpeg_reg failed");
         return -1; }
-    jpeg_src = (volatile unsigned char *)mmap(NULL, JPEG_BUF_SIZE, PROT_READ|PROT_WRITE, MAP_SHARED, fd, JPEG_SRC_OFFSET);
-    if (!jpeg_src) {
-        printf("mmapn jpeg_src failed");
-        return -1; }
-    jpeg_dst = (volatile unsigned char *)mmap(NULL, JPEG_BUF_SIZE, PROT_READ|PROT_WRITE, MAP_SHARED, fd, JPEG_DST_OFFSET);
-    if (!jpeg_dst) {
-        printf("mmapn jpeg_dst failed");
-        return -1; }
 
     int loop = 0;
 
     while (1) {
 
-        jpeg_reg->source = JPEG_BASE + JPEG_SRC_OFFSET;
-        jpeg_reg->dest = JPEG_BASE + JPEG_SRC_OFFSET;
-	jpeg_src[0] = 0x55;
+        jpeg_reg->source = JPEG_BUFFER;
+        jpeg_reg->dest = JPEG_BUFFER + JPEG_BUF_SIZE;
+        jpeg_reg->start = 1;
 
         uint32_t info = 1; /* unmask */
 
