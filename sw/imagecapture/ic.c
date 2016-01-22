@@ -13,9 +13,6 @@ int main(void)
 {
     volatile unsigned *ic;
 
-    void *map = NULL;
-    ssize_t filesize = 0x1000;
-
     printf("Opening /dev/uio0!\n");
 
     int fd = open("/dev/uio0", O_RDWR);
@@ -27,18 +24,23 @@ int main(void)
     /* mmap the UIO device */
     ic = (volatile unsigned *)mmap(NULL, MAP_SIZE, PROT_READ|PROT_WRITE, MAP_SHARED, fd, 0);
     if (!ic) {
-        printf("mmapn");
-        return -1;
+        perror("mmap failure");
+        exit(EXIT_FAILURE);
     }
 
     int loop = 0;
 
+    uint32_t info = 1; /* unmask */
+
+    struct pollfd fds = {
+        .fd = fd,
+        .events = POLLIN,
+    };
+
     while (1) {
 
-        ic[0] = loop++;
-
-        uint32_t info = 1; /* unmask */
-
+	/* Enable interrupts */
+	info = 1;
         ssize_t nb = write(fd, &info, sizeof(info));
         if (nb < sizeof(info)) {
             perror("write");
@@ -46,16 +48,13 @@ int main(void)
             exit(EXIT_FAILURE);
         }
 
-        struct pollfd fds = {
-            .fd = fd,
-            .events = POLLIN,
-        };
-
+        /* Wait for an interrupt */
         int ret = poll(&fds, 1, -1);
         if (ret >= 1) {
             nb = read(fd, &info, sizeof(info));
             if (nb == sizeof(info)) {
                 /* Do something in response to the interrupt. */
+	        ic[0] = loop++; /* Write to register */
                 printf("Interrupt #%u!\n", info);
             }
         } else {
