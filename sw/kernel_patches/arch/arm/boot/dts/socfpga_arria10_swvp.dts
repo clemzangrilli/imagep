@@ -97,7 +97,7 @@
 		jpeg@d8000000 {
 			compatible = "imagecapture";
 			status = "okay";
-			reg = <0xd8000000 0x01000000>;
+			reg = <0xd8000000 0x03000000>;
 			reg-names = "zone1";
 			interrupts = <0x0 0x14 0x4>;
 		};
