@@ -1,3 +1,0 @@
-arm-angstrom-linux-gnueabi-gcc ic_uio_usr.c -o ic --sysroot=/store/data/angstrom-socfpga/build/tmp-angstrom_v2014_12-glibc/sysroots/arria10swvp -mfloat-abi=hard
-scp -P 9547 ic root@localhost:/home/root/ic
-

@@ -3,13 +3,12 @@ CROSS_COMPILER ?= ../../../linaro/gcc-linaro-arm-linux-gnueabihf-4.8-2013.12_lin
 
 CC = ${CROSS_COMPILER}gcc
 
-jpeg: jpeg.c
-	${CC} jpeg.c -o jpeg -mfloat-abi=hard
+ic: ic.c
+	${CC} ic.c -o ic -mfloat-abi=hard
 
 scp:
-	scp -P 9547 jpeg root@localhost:/home/root/jpeg
+	scp -P 9547 ic root@localhost:/home/root/ic
 
 clean:
-	rm -f jpeg *.o *~
-
+	rm -f ic *.o *~
 
