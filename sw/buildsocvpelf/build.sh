@@ -1,4 +1,4 @@
-#!/bin/sh 
+#!/bin/bash 
 
 # This script is based on Mentor Graphics' work
 # Simplified the user interface and the file location expectations.
@@ -42,7 +42,7 @@ ELF=${3:-"linux-system.axf"}
 CROSS_COMPILE="${4}"
 
 # functions
-function usage() {
+function usage () {
 
     cat <<EOT
 Usage: ${SELF} [-h] <zImage> <dtb> <elf>
