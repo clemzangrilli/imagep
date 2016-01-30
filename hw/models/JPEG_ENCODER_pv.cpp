@@ -27,6 +27,7 @@
 
 #include "JPEG_ENCODER_pv.h"
 #include <iostream>
+#include <iomanip>
 
 using namespace sc_core;
 using namespace sc_dt;
@@ -47,16 +48,30 @@ JPEG_ENCODER_pv::JPEG_ENCODER_pv(sc_module_name module_name)
 // Write callback for start register.
 // The newValue has been already assigned to the start register.
 void JPEG_ENCODER_pv::cb_write_start(unsigned long long newValue) {
-  unsigned char d;
+  unsigned char *d;
+  unsigned int size;
 
   cout << sc_time_stamp() <<": "<< name() <<"cb_write_start received "<< start << endl;
 
   if (start == 0) {
    irq.write(false); 
   } else {
-   master_read(inputaddr, &d, 1);
-   d++;
-   master_write(outputaddr, d);
+   size = (inputlength & 0x3fff) * (inputlength >> 14) * 4;
+cout << std::hex << "inputlength = " << inputlength << " size = " << size << endl;
+   d = (unsigned char *) malloc(size);
+   master_read(inputaddr, d, size);
+
+cout << noshowbase << setfill('0');
+
+for (int i=0;i<size;i+=4) {
+  cout << "0x";
+  for (int j=0;j<4;j++) {
+    cout << std::hex << setw(2) << (unsigned int)d[i+j];
+  }
+  cout << endl;
+}
+
+   //master_write(outputaddr, d);
    irq.write(true); 
   }
 }
