@@ -23,5 +23,6 @@ Arria10_top.fb.height   = 600
 
 Arria10_top.Console0.connected = 0
 
-# trace_script = trace.tcl
+vlan:tcp_napt = :3624 => :8080 ; :5684 => :23 ;:5247 => :69 ; :9547 => :22 ; :8524 => :21 ; :6527 => :53 ; :10010 => :10010 ; :5555 => :5555
 
+trace_script = /home/jon/work/test/trace.tcl

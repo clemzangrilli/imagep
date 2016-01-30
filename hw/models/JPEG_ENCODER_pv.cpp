@@ -56,20 +56,12 @@ void JPEG_ENCODER_pv::cb_write_start(unsigned long long newValue) {
   if (start == 0) {
    irq.write(false); 
   } else {
-   size = (inputlength & 0x3fff) * (inputlength >> 14) * 4;
+   size = (inputlength & 0x1fff) * (inputlength >> 13) * 4;
 cout << std::hex << "inputlength = " << inputlength << " size = " << size << endl;
    d = (unsigned char *) malloc(size);
    master_read(inputaddr, d, size);
-
-cout << noshowbase << setfill('0');
-
-for (int i=0;i<size;i+=4) {
-  cout << "0x";
-  for (int j=0;j<4;j++) {
-    cout << std::hex << setw(2) << (unsigned int)d[i+j];
-  }
-  cout << endl;
-}
+   outputlength = size;
+   master_write(outputaddr, d, size);
 
    //master_write(outputaddr, d);
    irq.write(true); 
