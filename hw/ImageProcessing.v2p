@@ -18,6 +18,7 @@ Files {
 	 } 
 }
 Designs {{$PRJDIR/main_Arria10.cpp}}
+Simulations /home/jon/work/git/A10imagep/hw/ImageProcessing/sim
 Folders {
 	 Sources {*.c *.cpp *.C *.cxx *.cc} 
 	 {Public Headers} {*.h *.hpp *.H *.hxx *.hh} 
