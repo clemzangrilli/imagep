@@ -13,7 +13,7 @@ CC      = vista_cc
 CFLAGS  =  -g -O2 -DHAVE_CONFIG_H
 LDFLAGS = -lgd 
 
-OBJS  = fswebcam.o log.o effects.o parse.o src.o src_test.o src_raw.o src_file.o src_v4l1.o src_v4l2.o
+OBJS  = vista_fswebcam.o bmpfile.o log.o effects.o parse.o src.o src_test.o src_raw.o src_file.o src_v4l1.o src_v4l2.o
 OBJS += dec_rgb.o dec_yuv.o dec_grey.o dec_bayer.o dec_jpeg.o dec_png.o
 OBJS += dec_s561.o
 

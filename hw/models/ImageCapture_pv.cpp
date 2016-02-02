@@ -29,23 +29,51 @@
 #include "ImageCapture_pv.h"
 #include <iostream>
 
+#include "vista_fswebcam.h"
+
 using namespace sc_core;
 using namespace sc_dt;
 using namespace std;
 
 //constructor
 ImageCapture_pv::ImageCapture_pv(sc_module_name module_name) 
-  : ImageCapture_pv_base(module_name) {
-
-
-  SC_THREAD(makeInterrupt);
-
+  : ImageCapture_pv_base(module_name)
+  ,mbFifo(1)
+{
+  vista_fswc_init();
+  vista_fswc_pregrab();
+  
+  SC_THREAD(thread);
 }   
 
-void ImageCapture_pv::makeInterrupt() {
+void ImageCapture_pv::thread() {
   while(1) {
-    wait(1000, SC_MS);
+    mbFifo.peek(); // block/wait until start bit is written
+
+    cout <<name()<<" @ "<<sc_time_stamp()<<" Capturing Image " << endl;;
+    vista_fswc_grab();
+
+    FILE *f = fopen("/tmp/hope.bmp", "rb");
+    fseek(f, 0, SEEK_END);
+    long fsize = ftell(f);
+    fseek(f, 0, SEEK_SET);
+
+    char *b = (char*) malloc(fsize + 1);
+    fread(b, fsize, 1, f);
+    fclose(f);
+    b[fsize] = 0;
+
+    cout <<name()<<" @ "<<sc_time_stamp()<<" Writing data to " << TARGET << endl;
+
+    master_write(TARGET , b, fsize);
+    free(b);
+
+    cout <<name()<<" @ "<<sc_time_stamp()<<" Setting SIZE to " << fsize << endl;
+    SIZE = fsize;
+
+    cout <<name()<<" @ "<<sc_time_stamp()<<" Triggering irq" << endl;
     irq.write(1);
+    mbFifo.get();  // release Fifo, Done.
   }
 }
 
@@ -55,14 +83,20 @@ void ImageCapture_pv::makeInterrupt() {
 // These functions are called before the write callbacks on the port.
 ///////////////////////////////////////////////////////////////////////////////// 
 
+#define CHECK_BIT(var,pos) ((var) & (1<<(pos)))
+
 // Write callback for CONTROL register.
 // The newValue has been already assigned to the CONTROL register.
 void ImageCapture_pv::cb_write_CONTROL(unsigned long long newValue) {
-  cout << "ImageCapture_pv::cb_write_CONTROL " << newValue << endl;
-
-  irq.write(0);
+  if (CHECK_BIT(CONTROL, 0)) {
+    cout <<name()<<" @ "<<sc_time_stamp()<<" IC CONTROL start bit = 1" << endl;
+    mbFifo.put(1);
+  }
+  else {
+    cout <<name()<<" @ "<<sc_time_stamp()<<" IC CONTROL start bit = 0, resetting irq" << endl;
+    irq.write(0);
+  }
 }
-    
 
 // Read callback for slave port.
 // Returns true when successful.

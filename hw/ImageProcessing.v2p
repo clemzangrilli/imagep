@@ -28,11 +28,12 @@ Folders {
 	 {Linked Binaries} {*.o *.a *.so} 
 	 {Other Binaries} {*.exe *.x} 
 }
-IncludePaths {$PRJDIR/../../A10jpeg/models $PRJDIR/../../A10jpeg/jpeg_algorithm $PRJDIR/../../A10jpeg/jpeg_algorithm/catapult_include}
+IncludePaths {{$PRJDIR/../../A10jpeg/models} {$PRJDIR/../../A10jpeg/jpeg_algorithm} {$PRJDIR/../../A10jpeg/jpeg_algorithm/catapult_include} {$PRJDIR/fswebcam}}
 GeneralCompilationOptions -Wall
 AlwaysCompileInCPPMode 1
 LinkPackages {Arria10_catalogue Arria10 models_catalogue model_builder}
 LinkObjects {{$PRJDIR/fswebcam/libfswebcam.a} {$PRJDIR/../../A10jpeg/objdir/libvmodels.a}}
+LinkOptions -lgd
 ProjectLibraryType archive
 ProjectComponentsLibraryPath {$PRJDIR/$PRJFILE_BASENAME/interfaces}
 ProjectWorkingDirectory {$PRJDIR/$PRJFILE_BASENAME/build}

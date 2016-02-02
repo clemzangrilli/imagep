@@ -6,7 +6,7 @@ CC = ${CROSS_COMPILER}gcc
 ic: ic.c
 	${CC} ic.c -o ic -mfloat-abi=hard
 
-scp:
+scp: ic
 	scp -P 9547 ic root@localhost:/home/root/ic
 
 clean:
