@@ -667,7 +667,7 @@ int vista_fswc_grab()
 		}
 	}
 
-	bmp = bmp_create(config->width, config->height, 16);
+	bmp = bmp_create(config->width, config->height, 24);
 	rgb_pixel_t pixel = {128, 64, 0, 0};
 
 	pbitmap = abitmap;
