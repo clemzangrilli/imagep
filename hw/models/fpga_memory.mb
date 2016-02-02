@@ -6,7 +6,7 @@
 template "/TLM/Generic_Library/Memory"
 
 # === ports ===
-add_port "s" /TLM/protocols/axi slave 128 -bind_mode mandatory
+add_port "slave" /TLM/protocols/axi slave 128 -bind_mode mandatory
 
 # === parameters ===
 # usage: add_parameter <parameter_name> <default_value> <type:string|unsigned|int>
@@ -21,10 +21,10 @@ set_auto_parameter_default "verbose_parameters" true boolean {true false}
 set_auto_parameter_default "dmi_enabled" true boolean {true false}
 set_auto_parameter_default "warning_level" WARNING string {
       "IGNORE" "WARNING" "ONCE" "ERROR" "FATAL"}
-set_auto_parameter_default "s_pipeline_length" 2 uint32 {}
-set_auto_parameter_default "s_outstanding" 1 uint32 {}
-set_auto_parameter_default "s_read_data_queue_size" 0 uint32 {}
-set_auto_parameter_default "s_write_data_queue_size" 0 uint32 {}
+set_auto_parameter_default "slave_pipeline_length" 2 uint32 {}
+set_auto_parameter_default "slave_outstanding" 1 uint32 {}
+set_auto_parameter_default "slave_read_data_queue_size" 0 uint32 {}
+set_auto_parameter_default "slave_write_data_queue_size" 0 uint32 {}
 set_auto_parameter_default "size_in_bytes" 0x10000000 uint64 {}
 set_auto_parameter_default "endianness" host string {"host" "little" "big"}
 
@@ -33,8 +33,8 @@ set_auto_parameter_default "endianness" host string {"host" "little" "big"}
 # example: add_generic "OUT_ACTIVE_VALUE" false
 
 # === machine architecture ===
-add_delay_policy s.READ 3 -latency 0 -sync 0 -power 0
-add_delay_policy s.WRITE 5 -latency 0 -sync 0 -power 0
+add_delay_policy slave.READ 3 -latency 0 -sync 0 -power 0
+add_delay_policy slave.WRITE 5 -latency 0 -sync 0 -power 0
 
 # === generate options ===
 set_generate_kind "pvt" ;# should be one of: model|pv|pvt

@@ -21,6 +21,7 @@
 //* Model Builder version: 4.2alpha1
 //* Generated on: Jan. 20, 2016 10:06:23 AM, (user: markca)
 //* Automatically merged on: Jan. 20, 2016 10:08:36 AM, (user: markca)
+//* Automatically merged on: Feb. 02, 2016 10:59:37 AM, (user: markca)
 //*>
 
 
@@ -44,7 +45,7 @@ ImageCapture_pv::ImageCapture_pv(sc_module_name module_name)
 void ImageCapture_pv::makeInterrupt() {
   while(1) {
     wait(1000, SC_MS);
-    interrupt.write(1);
+    irq.write(1);
   }
 }
 
@@ -59,20 +60,20 @@ void ImageCapture_pv::makeInterrupt() {
 void ImageCapture_pv::cb_write_CONTROL(unsigned long long newValue) {
   cout << "ImageCapture_pv::cb_write_CONTROL " << newValue << endl;
 
-  interrupt.write(0);
+  irq.write(0);
 }
     
 
-// Read callback for from_bus port.
+// Read callback for slave port.
 // Returns true when successful.
-bool ImageCapture_pv::from_bus_callback_read(mb_address_type address, unsigned char* data, unsigned size) {
+bool ImageCapture_pv::slave_callback_read(mb_address_type address, unsigned char* data, unsigned size) {
   
   return true;
 }
 
-// Write callback for from_bus port.
+// Write callback for slave port.
 // Returns true when successful.
-bool ImageCapture_pv::from_bus_callback_write(mb_address_type address, unsigned char* data, unsigned size) {
+bool ImageCapture_pv::slave_callback_write(mb_address_type address, unsigned char* data, unsigned size) {
   
   return true;
 } 
@@ -80,15 +81,15 @@ bool ImageCapture_pv::from_bus_callback_write(mb_address_type address, unsigned 
 
 
 
-unsigned ImageCapture_pv::from_bus_callback_read_dbg(mb_address_type address, unsigned char* data, unsigned size) {
+unsigned ImageCapture_pv::slave_callback_read_dbg(mb_address_type address, unsigned char* data, unsigned size) {
   return 0;
 } 
 
-unsigned ImageCapture_pv::from_bus_callback_write_dbg(mb_address_type address, unsigned char* data, unsigned size) {
+unsigned ImageCapture_pv::slave_callback_write_dbg(mb_address_type address, unsigned char* data, unsigned size) {
   return 0;
 } 
 
-bool ImageCapture_pv::from_bus_get_direct_memory_ptr(mb_address_type address, tlm::tlm_dmi& dmiData) {
+bool ImageCapture_pv::slave_get_direct_memory_ptr(mb_address_type address, tlm::tlm_dmi& dmiData) {
   return false;
 }
 

@@ -5,8 +5,9 @@
 # ========================================================================
 
 # === ports ===
-add_port "from_bus" /TLM/protocols/axi slave 128 -bind_mode mandatory
-add_port "interrupt" /TLM/protocols/signal master 1 -bind_mode mandatory
+add_port "slave" /TLM/protocols/axi slave 128 -bind_mode mandatory
+add_port "master" /TLM/protocols/axi master 128 -bind_mode mandatory
+add_port "irq" /TLM/protocols/signal master 1 -bind_mode mandatory
 
 # === parameters ===
 # usage: add_parameter <parameter_name> <default_value> <type:string|unsigned|int>
@@ -23,20 +24,23 @@ set_auto_parameter_default "verbose_parameters" true boolean {true false}
 set_auto_parameter_default "dmi_enabled" true boolean {true false}
 set_auto_parameter_default "warning_level" WARNING string {
       "IGNORE" "WARNING" "ONCE" "ERROR" "FATAL"}
-set_auto_parameter_default "from_bus_pipeline_length" 2 uint32 {}
-set_auto_parameter_default "from_bus_outstanding" 1 uint32 {}
-set_auto_parameter_default "from_bus_read_data_queue_size" 0 uint32 {}
-set_auto_parameter_default "from_bus_write_data_queue_size" 0 uint32 {}
+set_auto_parameter_default "slave_pipeline_length" 2 uint32 {}
+set_auto_parameter_default "slave_outstanding" 1 uint32 {}
+set_auto_parameter_default "slave_read_data_queue_size" 0 uint32 {}
+set_auto_parameter_default "slave_write_data_queue_size" 0 uint32 {}
+set_auto_parameter_default "master_outstanding" 1 uint32 {}
+set_auto_parameter_default "master_read_data_queue_size" 0 uint32 {}
+set_auto_parameter_default "master_write_data_queue_size" 0 uint32 {}
 
 # === generics ===
 # usage: add_generic <generic_name> <value>
 # example: add_generic "OUT_ACTIVE_VALUE" false
 
 # === machine architecture ===
-declare_register from_bus CONTROL 0x0 {} -rw_access rw -trigger w -width 32 -reset_value 0
-declare_register from_bus WIDTH 0x4 {} -rw_access rw -width 32 -reset_value 352
-declare_register from_bus HEIGHT 0x8 {} -rw_access rw -width 32 -reset_value 288
-declare_register from_bus TARGET 0xC {} -rw_access rw -width 32 -reset_value 0
+declare_register slave CONTROL 0x0 {} -rw_access rw -trigger w -width 32 -reset_value 0
+declare_register slave WIDTH 0x4 {} -rw_access rw -width 32 -reset_value 352
+declare_register slave HEIGHT 0x8 {} -rw_access rw -width 32 -reset_value 288
+declare_register slave TARGET 0xC {} -rw_access rw -width 32 -reset_value 0
 
 # === generate options ===
 set_generate_kind "pvt" ;# should be one of: model|pv|pvt

@@ -33,7 +33,7 @@ trace_linux_process { mem_test libc-2.20.so } {
 
 trace_socket   Arria10_top.jpeg.slave
 trace_socket   Arria10_top.jpeg.master
-trace_socket   Arria10_top.fpgamem.s
+trace_socket   Arria10_top.fpgamem.slave
 
 trace_register Arria10_top.jpeg.PV.inputaddr
 trace_register Arria10_top.jpeg.PV.inputlength

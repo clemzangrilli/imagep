@@ -8,8 +8,9 @@ template "/TLM/Generic_Library/Bus"
 # === ports ===
 add_port "FPGAmaster" /TLM/protocols/axi master 128 -bind_mode mandatory
 add_port "FPGAslave" /TLM/protocols/axi slave 128 -bind_mode mandatory
-add_port "FrameBufferMaster" /TLM/protocols/axi master 128 -bind_mode mandatory
-add_port "ImageCaptureMaster" /TLM/protocols/axi master 128 -bind_mode mandatory
+add_port "FrameBuffer" /TLM/protocols/axi master 128 -bind_mode mandatory
+add_port "ICregisters" /TLM/protocols/axi master 128 -bind_mode mandatory
+add_port "ICdma" /TLM/protocols/axi slave 128 -bind_mode mandatory
 add_port "JPEGregisters" /TLM/protocols/axi master 128 -bind_mode mandatory
 add_port "JPEGdma" /TLM/protocols/axi slave 128 -bind_mode mandatory
 add_port "FPGAmem" /TLM/protocols/axi master 128 -bind_mode mandatory
@@ -38,20 +39,22 @@ set_auto_parameter_default "FPGAmaster_additional_ranges" {""} string {}
 set_auto_parameter_default "FPGAmaster_latency" 0 uint32 {}
 set_auto_parameter_default "FPGAslave_priority" 0 uint32 {}
 set_auto_parameter_default "FPGAslave_vmap" {""} string {}
-set_auto_parameter_default "FrameBufferMaster_priority" 0 uint32 {}
-set_auto_parameter_default "FrameBufferMaster_base_address" 0 uint64 {}
-set_auto_parameter_default "FrameBufferMaster_size" 0 uint64 {}
-set_auto_parameter_default "FrameBufferMaster_subtract_base_address" 1 uint32 {0 1}
-set_auto_parameter_default "FrameBufferMaster_secure" 0 uint32 {0 1}
-set_auto_parameter_default "FrameBufferMaster_additional_ranges" {""} string {}
-set_auto_parameter_default "FrameBufferMaster_latency" 0 uint32 {}
-set_auto_parameter_default "ImageCaptureMaster_priority" 0 uint32 {}
-set_auto_parameter_default "ImageCaptureMaster_base_address" 0 uint64 {}
-set_auto_parameter_default "ImageCaptureMaster_size" 0 uint64 {}
-set_auto_parameter_default "ImageCaptureMaster_subtract_base_address" 1 uint32 {0 1}
-set_auto_parameter_default "ImageCaptureMaster_secure" 0 uint32 {0 1}
-set_auto_parameter_default "ImageCaptureMaster_additional_ranges" {""} string {}
-set_auto_parameter_default "ImageCaptureMaster_latency" 0 uint32 {}
+set_auto_parameter_default "FrameBuffer_priority" 0 uint32 {}
+set_auto_parameter_default "FrameBuffer_base_address" 0 uint64 {}
+set_auto_parameter_default "FrameBuffer_size" 0 uint64 {}
+set_auto_parameter_default "FrameBuffer_subtract_base_address" 1 uint32 {0 1}
+set_auto_parameter_default "FrameBuffer_secure" 0 uint32 {0 1}
+set_auto_parameter_default "FrameBuffer_additional_ranges" {""} string {}
+set_auto_parameter_default "FrameBuffer_latency" 0 uint32 {}
+set_auto_parameter_default "ICregisters_priority" 0 uint32 {}
+set_auto_parameter_default "ICregisters_base_address" 0 uint64 {}
+set_auto_parameter_default "ICregisters_size" 0 uint64 {}
+set_auto_parameter_default "ICregisters_subtract_base_address" 1 uint32 {0 1}
+set_auto_parameter_default "ICregisters_secure" 0 uint32 {0 1}
+set_auto_parameter_default "ICregisters_additional_ranges" {""} string {}
+set_auto_parameter_default "ICregisters_latency" 0 uint32 {}
+set_auto_parameter_default "ICdma_priority" 0 uint32 {}
+set_auto_parameter_default "ICdma_vmap" {""} string {}
 set_auto_parameter_default "JPEGregisters_priority" 0 uint32 {}
 set_auto_parameter_default "JPEGregisters_base_address" 0 uint64 {}
 set_auto_parameter_default "JPEGregisters_size" 0 uint64 {}
@@ -76,8 +79,22 @@ set_auto_parameter_default "FPGAmem_latency" 0 uint32 {}
 # === machine architecture ===
 add_delay_policy FPGAslave 0 -latency 0 -sync 1 -power 0
 add_pipeline_policy FPGAmaster FPGAslave -latency FPGAmaster_latency -buffer_size 0 -sync 1 -power 0
-add_pipeline_policy FrameBufferMaster FPGAslave -latency FrameBufferMaster_latency -buffer_size 0 -sync 1 -power 0
-add_pipeline_policy ImageCaptureMaster FPGAslave -latency ImageCaptureMaster_latency -buffer_size 0 -sync 1 -power 0
+add_pipeline_policy FrameBuffer FPGAslave -latency FrameBuffer_latency -buffer_size 0 -sync 1 -power 0
+add_pipeline_policy ICregisters FPGAslave -latency ICregisters_latency -buffer_size 0 -sync 1 -power 0
+add_pipeline_policy JPEGregisters FPGAslave -latency JPEGregisters_latency -buffer_size 0 -sync 1 -power 0
+add_pipeline_policy FPGAmem FPGAslave -latency FPGAmem_latency -buffer_size 0 -sync 1 -power 0
+add_delay_policy ICdma 0 -latency 0 -sync 1 -power 0
+add_pipeline_policy FPGAmaster ICdma -latency FPGAmaster_latency -buffer_size 0 -sync 1 -power 0
+add_pipeline_policy FrameBuffer ICdma -latency FrameBuffer_latency -buffer_size 0 -sync 1 -power 0
+add_pipeline_policy ICregisters ICdma -latency ICregisters_latency -buffer_size 0 -sync 1 -power 0
+add_pipeline_policy JPEGregisters ICdma -latency JPEGregisters_latency -buffer_size 0 -sync 1 -power 0
+add_pipeline_policy FPGAmem ICdma -latency FPGAmem_latency -buffer_size 0 -sync 1 -power 0
+add_delay_policy JPEGdma 0 -latency 0 -sync 1 -power 0
+add_pipeline_policy FPGAmaster JPEGdma -latency FPGAmaster_latency -buffer_size 0 -sync 1 -power 0
+add_pipeline_policy FrameBuffer JPEGdma -latency FrameBuffer_latency -buffer_size 0 -sync 1 -power 0
+add_pipeline_policy ICregisters JPEGdma -latency ICregisters_latency -buffer_size 0 -sync 1 -power 0
+add_pipeline_policy JPEGregisters JPEGdma -latency JPEGregisters_latency -buffer_size 0 -sync 1 -power 0
+add_pipeline_policy FPGAmem JPEGdma -latency FPGAmem_latency -buffer_size 0 -sync 1 -power 0
 
 # === generate options ===
 set_generate_kind "pvt" ;# should be one of: model|pv|pvt

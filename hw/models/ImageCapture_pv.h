@@ -21,6 +21,7 @@
 //* Model Builder version: 4.2alpha1
 //* Generated on: Jan. 20, 2016 10:06:23 AM, (user: markca)
 //* Automatically merged on: Jan. 20, 2016 10:08:36 AM, (user: markca)
+//* Automatically merged on: Feb. 02, 2016 10:59:37 AM, (user: markca)
 //*>
 
 
@@ -53,18 +54,18 @@ class ImageCapture_pv : public ImageCapture_pv_base {
   ////////////////////////////////////////
   // target ports read callbacks
   //////////////////////////////////////// 
-  bool from_bus_callback_read(mb_address_type address, unsigned char* data, unsigned size);
+  bool slave_callback_read(mb_address_type address, unsigned char* data, unsigned size);
   
-  unsigned from_bus_callback_read_dbg(mb_address_type address, unsigned char* data, unsigned size); 
+  unsigned slave_callback_read_dbg(mb_address_type address, unsigned char* data, unsigned size); 
 
  protected:
   ////////////////////////////////////////
   // target ports write callbacks
   //////////////////////////////////////// 
-  bool from_bus_callback_write(mb_address_type address, unsigned char* data, unsigned size);
+  bool slave_callback_write(mb_address_type address, unsigned char* data, unsigned size);
   
-  unsigned from_bus_callback_write_dbg(mb_address_type address, unsigned char* data, unsigned size); 
+  unsigned slave_callback_write_dbg(mb_address_type address, unsigned char* data, unsigned size); 
   virtual void cb_transport_dbg_CONTROL(tlm::tlm_generic_payload& trans); 
-  bool from_bus_get_direct_memory_ptr(mb_address_type address, tlm::tlm_dmi& dmiData);   
+  bool slave_get_direct_memory_ptr(mb_address_type address, tlm::tlm_dmi& dmiData);   
 };
 
