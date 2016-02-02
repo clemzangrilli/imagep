@@ -23,4 +23,5 @@ To add a program to display jpg or bmp files on the framebuffer execute the foll
 You should then be able to display an image with:
 > fbi -T 1 -d /dev/fb0 <image-file>
 
-
+This project depends on the A10jpeg project.  If the A10jpeg project is cloned into the directory
+parrallel to the A10imagep project all of the links and references should work correctly.
