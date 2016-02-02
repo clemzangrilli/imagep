@@ -38,9 +38,10 @@ set_auto_parameter_default "master_write_data_queue_size" 0 uint32 {}
 
 # === machine architecture ===
 declare_register slave CONTROL 0x0 {} -rw_access rw -trigger w -width 32 -reset_value 0
-declare_register slave WIDTH 0x4 {} -rw_access rw -width 32 -reset_value 352
-declare_register slave HEIGHT 0x8 {} -rw_access rw -width 32 -reset_value 288
+declare_register slave WIDTH 0x4 {} -rw_access rw -width 32 -reset_value 0
+declare_register slave HEIGHT 0x8 {} -rw_access rw -width 32 -reset_value 0
 declare_register slave TARGET 0xC {} -rw_access rw -width 32 -reset_value 0
+declare_register slave SIZE 0x10 {} -rw_access rw -width 32 -reset_value 0
 
 # === generate options ===
 set_generate_kind "pvt" ;# should be one of: model|pv|pvt

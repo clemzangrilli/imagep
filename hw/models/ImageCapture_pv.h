@@ -42,7 +42,9 @@ class ImageCapture_pv : public ImageCapture_pv_base {
   SC_HAS_PROCESS(ImageCapture_pv);
   ImageCapture_pv(sc_core::sc_module_name module_name);  
   
-  void makeInterrupt();
+  void thread();
+
+  mb::mb_fifo<unsigned> mbFifo;
 
  protected:
   /////////////////////////////////////////
