@@ -111,10 +111,10 @@ void jpgencoder(const char * bmpfilename, const char * jpgfilename)
       for (unsigned int x=0; x<8; x++) {
         for (unsigned int y=0; y<8; y++) {
           loc = (((x*8)+y)*4) + offset;
-          jpeg_src[loc] = a = (unsigned char) 0;
-          jpeg_src[loc+1] = r = bitmap->red(i+x, j+y);
-          jpeg_src[loc+2] = g = bitmap->green(i+x, j+y);
-          jpeg_src[loc+3] = b = bitmap->blue(i+x, j+y);
+          jpeg_src[loc+3] = a = (unsigned char) 0;
+          jpeg_src[loc+2] = r = bitmap->red(i+x, j+y);
+          jpeg_src[loc+1] = g = bitmap->green(i+x, j+y);
+          jpeg_src[loc+0] = b = bitmap->blue(i+x, j+y);
           //rgb[x*8+y].a = (uint8) 0;
           //rgb[x*8+y].r = bitmap->red(i+x, j+y);
           //rgb[x*8+y].g = bitmap->green(i+x, j+y);
@@ -145,6 +145,7 @@ void jpgencoder(const char * bmpfilename, const char * jpgfilename)
     /* Do something in response to the interrupt. */
     printf("Interrupt #%u!  \n", info);
     int jpegsize = jpeg_reg->sdest;
+printf("size = %d\n", jpegsize);
     assert (ftruncate(fdjpg, jpegsize) == 0);
     printf("Creating output jpg file.\n");
     jpeg_mmap = (unsigned char *)mmap(0, jpegsize, PROT_READ | PROT_WRITE, MAP_SHARED, fdjpg, 0);

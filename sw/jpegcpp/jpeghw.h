@@ -7,7 +7,7 @@
 #define JPEG_BASE     0xd0001000
 #define JPEG_REG_SIZE     0x1000
 #define JPEG_BUFFER   0xe0000000
-#define JPEG_BUF_SIZE 0x00200000
+#define JPEG_BUF_SIZE 0x01000000
 
 typedef struct {
   unsigned source;
