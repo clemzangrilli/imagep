@@ -607,6 +607,10 @@ int vista_fswc_grab()
 		return(-1);
 	}
 
+	/* Grab (and do nothing with) the skipped frames. */
+	for(frame = 0; frame < config->skipframes; frame++)
+		if(src_grab(&src) == -1) break;
+
 	/* Grab the requested number of frames. */
 	for(frame = 0; frame < config->frames; frame++)
 	{
@@ -1366,7 +1370,7 @@ int vista_fswc_init()
 	config->height = 288;
 	config->fps = 0;
 	config->frames = 1;
-	config->skipframes = 0;
+	config->skipframes = 5;
 	config->palette = SRC_PAL_ANY;
 	config->option = NULL;
 	config->dumpframe = NULL;
