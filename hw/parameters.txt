@@ -21,7 +21,7 @@ Arria10_top.fb.refresh  = 50    # MS = 20 frames per second
 Arria10_top.fb.width    = 800
 Arria10_top.fb.height   = 600
 
-Arria10_top.jpeg.PixelPipeDelay = 1000000
+Arria10_top.jpeg.PixelPipeDelay = 1000
 
 Arria10_top.Console0.connected = 0
 

@@ -4,14 +4,6 @@ select_cluster "Arria10_top.Arria10_soc_inst.CORTEX_A9MP.PV"
 #trace_linux ../sw/kernel/linux-socfpga/vmlinux -libc ../../local/libc-2.20.so
 trace_linux ../sw/kernel/linux-socfpga/vmlinux
 
-
-trace_linux_process fact {
-  add_symbol_file ../sw/test/fact
-  trace_function_calls -kind eff
-  trace_current_function -kind eff
-  trace_function_activity * -kind eff
-}
-
 trace_linux_process mem_test {
   add_symbol_file ../sw/test/mem_test
   trace_function_calls -kind eff
@@ -28,8 +20,8 @@ trace_linux_process { mem_test libc-2* } {
 
 trace_linux_process jpegsw {
   add_symbol_file ../sw/jpegcpp/jpegsw
-  trace_function_activity jpgencoder -kind eff
   trace_function_activity main -kind eff
+  trace_function_activity jpgencoder -kind eff
   trace_function_activity pixelpipe -kind eff
 }
 
@@ -43,6 +35,7 @@ trace_linux_process jpeghw {
   trace_function_activity * -kind eff
   trace_function_activity jpgencoder -kind eff
   trace_function_activity main -kind eff
+  trace_function_activity waitforirq -kind eff
   insert_tracepoint jpeghw_1 -at-function-entry jpgencoder -do-raw {
     mysimtime = get_time_stamp();
     printf("Setting timing to DYNAMIC\n");
@@ -66,6 +59,9 @@ trace_linux_process { jpeghw libc-2* libstdc++* } {
   trace_memory_usage -kind csv
   trace_memory_functions_activity -kind eff
 }
+
+trace_attribute Arria10_top.Arria10_soc_inst.CORTEX_A9MP.PV.cpu0.core.core_state
+trace_attribute Arria10_top.Arria10_soc_inst.CORTEX_A9MP.PV.cpu1.core.core_state
 
 trace_socket   Arria10_top.jpeg.slave
 trace_socket   Arria10_top.jpeg.master

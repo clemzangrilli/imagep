@@ -49,6 +49,28 @@
 using std::cout;
 using std::endl;
 
+uint32_t waitforirq (int fd)
+{
+  uint32_t info = 1; /* unmask */
+  ssize_t nb = write(fd, &info, sizeof(info));
+  if (nb < sizeof(info)) { perror("write"); close(fd); exit(EXIT_FAILURE); }
+
+  struct pollfd fds = {
+      .fd = fd,
+      .events = POLLIN, };
+
+  int ret = poll(&fds, 1, -1);
+  if (ret <= 0) { perror("poll()"); close(fd); exit(EXIT_FAILURE); } 
+  nb = read(fd, &info, sizeof(info));
+
+  if (nb != sizeof(info)) {
+    printf("Interrupt read returned wrong size #%u!\n", info);
+    return 0;
+  } else {
+    return info;
+  }
+}
+
 void jpgencoder(const char * bmpfilename, const char * jpgfilename)
 {
 
@@ -124,28 +146,15 @@ void jpgencoder(const char * bmpfilename, const char * jpgfilename)
       offset += 256;
     }
   }
+
   jpeg_reg->start = 1;
-
-  uint32_t info = 1; /* unmask */
-  ssize_t nb = write(fd, &info, sizeof(info));
-  if (nb < sizeof(info)) { perror("write"); close(fd); exit(EXIT_FAILURE); }
-
-  struct pollfd fds = {
-      .fd = fd,
-      .events = POLLIN, };
-
-  int ret = poll(&fds, 1, -1);
-  if (ret <= 0) { perror("poll()"); close(fd); exit(EXIT_FAILURE); } 
-
-  nb = read(fd, &info, sizeof(info));
+  uint32_t irqresult = waitforirq(fd);
   jpeg_reg->start = 0;
-  if (nb != sizeof(info)) {
-    printf("Interrupt read returned wrong size #%u!\n", info);
-  } else {
+
+  if (irqresult) {
     /* Do something in response to the interrupt. */
-    printf("Interrupt #%u!  \n", info);
+    printf("Interrupt #%u!  \n", irqresult);
     int jpegsize = jpeg_reg->sdest;
-printf("size = %d\n", jpegsize);
     assert (ftruncate(fdjpg, jpegsize) == 0);
     printf("Creating output jpg file.\n");
     jpeg_mmap = (unsigned char *)mmap(0, jpegsize, PROT_READ | PROT_WRITE, MAP_SHARED, fdjpg, 0);
