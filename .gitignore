@@ -27,3 +27,5 @@ Debug
 t
 *.tgz
 *.exe
+*.bmp
+*.jpg
