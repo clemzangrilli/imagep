@@ -119,7 +119,7 @@ void jpgencoder(const char * bmpfilename, const char * jpgfilename)
   unsigned int img_rows = bitmap->rows();
   unsigned int img_columns = bitmap->columns();
 
-  jpeg_reg->ssize = (img_columns << 13) | img_rows;
+  jpeg_reg->ssize = ((0x3fff & img_columns) << 16) | (0x1fff & img_rows);
 
   volatile argb_t *rgb = (argb_t *)jpeg_src;           // 8x8 RGB block (R:0, G:1, B:2)
 
