@@ -1,4 +1,4 @@
-@include $env(VISTA_ROOT)/platforms/Arria10/parameters_$env(VISTA_PLATFORM_NAME).txt
+@include $env(VISTA_ROOT)/platforms/Arria10/parameters_Arria10.txt
 
 Arria10_top.Arria10_soc_inst.CORTEX_A9MP.PV.cpu0.core.elf_image_file    = ../sw/buildsocvpelf/linux-system-sd.elf
 Arria10_top.Arria10_soc_inst.SDMMC.image_file =  ../sw/buildsocvpsd/sd-angstrom-v2014.12-arria10swvp.img

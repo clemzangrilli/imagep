@@ -14,11 +14,20 @@ SRCS = $(wildcard *.cpp) $(wildcard $(MODELS)/*.cpp)
 
 all: $(PROJECTEXE)
 
-$(PROJECTEXE): $(SRCS)
+$(PROJECTEXE): $(SRCS) ../../A10jpeg/objdir/libvmodels.a
 	vista_build_project $(PROJECT)
+
+../../A10jpeg/objdir/libvmodels.a: ../../A10jpeg/jpeg_algorithm/jpeg.cpp
+	cd ../../A10jpeg && make
 
 run: $(PROJECTEXE)
 	vista_simulate $(PROJECT)
+
+vista: $(PROJECTEXE)
+	vista -no-stop-after-elaboration -simscript simscript.tcl -exec -project $(PROJECT)
+
+batch: $(PROJECTEXE)
+	vista -batch -exec -project $(PROJECT)
 
 COMMAND = "if {![does_tlm_library_exist $(MODELS)]} \
               {create_tlm_library $(MODELS) $(MODELS)}; \
