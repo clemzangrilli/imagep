@@ -1,5 +1,5 @@
 
-CROSS_COMPILER ?= /home/tools/linaro/gcc-linaro-arm-linux-gnueabihf-4.8-2013.12_linux/bin/arm-linux-gnueabihf-
+CROSS_COMPILER ?= ../../../linaro/gcc-linaro-arm-linux-gnueabihf-4.8-2013.12_linux/bin/arm-linux-gnueabihf-
 
 CC = ${CROSS_COMPILER}gcc
 CXX = ${CROSS_COMPILER}g++
