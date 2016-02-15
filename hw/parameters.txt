@@ -13,13 +13,16 @@ Arria10_top.fpga_axi_bus.ICregisters_size                 = 0x00001000
 Arria10_top.fpga_axi_bus.JPEGregisters_base_address       = 0x10001000   
 Arria10_top.fpga_axi_bus.JPEGregisters_size               = 0x00001000
 
+Arria10_top.fpga_axi_bus.IPregisters_base_address         = 0x10002000   
+Arria10_top.fpga_axi_bus.IPregisters_size                 = 0x00001000
+
 Arria10_top.fpga_axi_bus.FPGAmem_base_address             = 0x20000000   
 Arria10_top.fpga_axi_bus.FPGAmem_size                     = 0x10000000
 
 
 Arria10_top.fb.refresh  = 50    # MS = 20 frames per second
-Arria10_top.fb.width    = 800
-Arria10_top.fb.height   = 600
+Arria10_top.fb.width    = 352
+Arria10_top.fb.height   = 576
 
 Arria10_top.jpeg.PixelPipeDelay = 1000
 

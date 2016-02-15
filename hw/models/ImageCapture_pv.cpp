@@ -50,7 +50,7 @@ void ImageCapture_pv::thread() {
   while(1) {
     mbFifo.peek(); // block/wait until start bit is written
 
-    cout <<name()<<" @ "<<sc_time_stamp()<<" Capturing Image " << endl;;
+    //    cout <<name()<<" @ "<<sc_time_stamp()<<" Capturing Image " << endl;;
     vista_fswc_grab();
 
     FILE *f = fopen("/tmp/hope.bmp", "rb");
@@ -63,15 +63,15 @@ void ImageCapture_pv::thread() {
     fclose(f);
     b[fsize] = 0;
 
-    cout <<name()<<" @ "<<sc_time_stamp()<<" Writing data to " << TARGET << endl;
+    //    cout <<name()<<" @ "<<sc_time_stamp()<<" Writing data to " << TARGET << endl;
 
     master_write(TARGET , b, fsize);
     free(b);
 
-    cout <<name()<<" @ "<<sc_time_stamp()<<" Setting SIZE to " << fsize << endl;
+    //    cout <<name()<<" @ "<<sc_time_stamp()<<" Setting SIZE to " << fsize << endl;
     SIZE = fsize;
 
-    cout <<name()<<" @ "<<sc_time_stamp()<<" Triggering irq" << endl;
+    //    cout <<name()<<" @ "<<sc_time_stamp()<<" Triggering irq" << endl;
     irq.write(1);
     mbFifo.get();  // release Fifo, Done.
   }
@@ -89,11 +89,11 @@ void ImageCapture_pv::thread() {
 // The newValue has been already assigned to the CONTROL register.
 void ImageCapture_pv::cb_write_CONTROL(unsigned long long newValue) {
   if (CHECK_BIT(CONTROL, 0)) {
-    cout <<name()<<" @ "<<sc_time_stamp()<<" IC CONTROL start bit = 1" << endl;
+    //    cout <<name()<<" @ "<<sc_time_stamp()<<" IC CONTROL start bit = 1" << endl;
     mbFifo.put(1);
   }
   else {
-    cout <<name()<<" @ "<<sc_time_stamp()<<" IC CONTROL start bit = 0, resetting irq" << endl;
+    //    cout <<name()<<" @ "<<sc_time_stamp()<<" IC CONTROL start bit = 0, resetting irq" << endl;
     irq.write(0);
   }
 }

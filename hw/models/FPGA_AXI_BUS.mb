@@ -14,6 +14,8 @@ add_port "ICdma" /TLM/protocols/axi slave 128 -bind_mode mandatory
 add_port "JPEGregisters" /TLM/protocols/axi master 32 -bind_mode mandatory
 add_port "JPEGdma" /TLM/protocols/axi slave 32 -bind_mode mandatory
 add_port "FPGAmem" /TLM/protocols/axi master 128 -bind_mode mandatory
+add_port "IPregisters" /TLM/protocols/axi master 128 -bind_mode mandatory
+add_port "IPdma" /TLM/protocols/axi slave 128 -bind_mode mandatory
 
 # === parameters ===
 # usage: add_parameter <parameter_name> <default_value> <type:string|unsigned|int>
@@ -71,6 +73,15 @@ set_auto_parameter_default "FPGAmem_subtract_base_address" 1 uint32 {0 1}
 set_auto_parameter_default "FPGAmem_secure" 0 uint32 {0 1}
 set_auto_parameter_default "FPGAmem_additional_ranges" {""} string {}
 set_auto_parameter_default "FPGAmem_latency" 0 uint32 {}
+set_auto_parameter_default "IPregisters_priority" 0 uint32 {}
+set_auto_parameter_default "IPregisters_base_address" 0 uint64 {}
+set_auto_parameter_default "IPregisters_size" 0 uint64 {}
+set_auto_parameter_default "IPregisters_subtract_base_address" 1 uint32 {0 1}
+set_auto_parameter_default "IPregisters_secure" 0 uint32 {0 1}
+set_auto_parameter_default "IPregisters_additional_ranges" {""} string {}
+set_auto_parameter_default "IPregisters_latency" 0 uint32 {}
+set_auto_parameter_default "IPdma_priority" 0 uint32 {}
+set_auto_parameter_default "IPdma_vmap" {""} string {}
 
 # === generics ===
 # usage: add_generic <generic_name> <value>
@@ -83,18 +94,28 @@ add_pipeline_policy FrameBuffer FPGAslave -latency FrameBuffer_latency -buffer_s
 add_pipeline_policy ICregisters FPGAslave -latency ICregisters_latency -buffer_size 0 -sync 1 -power 0
 add_pipeline_policy JPEGregisters FPGAslave -latency JPEGregisters_latency -buffer_size 0 -sync 1 -power 0
 add_pipeline_policy FPGAmem FPGAslave -latency FPGAmem_latency -buffer_size 0 -sync 1 -power 0
+add_pipeline_policy IPregisters FPGAslave -latency IPregisters_latency -buffer_size 0 -sync 1 -power 0
 add_delay_policy ICdma 0 -latency 0 -sync 1 -power 0
 add_pipeline_policy FPGAmaster ICdma -latency FPGAmaster_latency -buffer_size 0 -sync 1 -power 0
 add_pipeline_policy FrameBuffer ICdma -latency FrameBuffer_latency -buffer_size 0 -sync 1 -power 0
 add_pipeline_policy ICregisters ICdma -latency ICregisters_latency -buffer_size 0 -sync 1 -power 0
 add_pipeline_policy JPEGregisters ICdma -latency JPEGregisters_latency -buffer_size 0 -sync 1 -power 0
 add_pipeline_policy FPGAmem ICdma -latency FPGAmem_latency -buffer_size 0 -sync 1 -power 0
+add_pipeline_policy IPregisters ICdma -latency IPregisters_latency -buffer_size 0 -sync 1 -power 0
 add_delay_policy JPEGdma 0 -latency 0 -sync 1 -power 0
 add_pipeline_policy FPGAmaster JPEGdma -latency FPGAmaster_latency -buffer_size 0 -sync 1 -power 0
 add_pipeline_policy FrameBuffer JPEGdma -latency FrameBuffer_latency -buffer_size 0 -sync 1 -power 0
 add_pipeline_policy ICregisters JPEGdma -latency ICregisters_latency -buffer_size 0 -sync 1 -power 0
 add_pipeline_policy JPEGregisters JPEGdma -latency JPEGregisters_latency -buffer_size 0 -sync 1 -power 0
 add_pipeline_policy FPGAmem JPEGdma -latency FPGAmem_latency -buffer_size 0 -sync 1 -power 0
+add_pipeline_policy IPregisters JPEGdma -latency IPregisters_latency -buffer_size 0 -sync 1 -power 0
+add_delay_policy IPdma 0 -latency 0 -sync 1 -power 0
+add_pipeline_policy FPGAmaster IPdma -latency FPGAmaster_latency -buffer_size 0 -sync 1 -power 0
+add_pipeline_policy FrameBuffer IPdma -latency FrameBuffer_latency -buffer_size 0 -sync 1 -power 0
+add_pipeline_policy ICregisters IPdma -latency ICregisters_latency -buffer_size 0 -sync 1 -power 0
+add_pipeline_policy JPEGregisters IPdma -latency JPEGregisters_latency -buffer_size 0 -sync 1 -power 0
+add_pipeline_policy FPGAmem IPdma -latency FPGAmem_latency -buffer_size 0 -sync 1 -power 0
+add_pipeline_policy IPregisters IPdma -latency IPregisters_latency -buffer_size 0 -sync 1 -power 0
 
 # === generate options ===
 set_generate_kind "pvt" ;# should be one of: model|pv|pvt

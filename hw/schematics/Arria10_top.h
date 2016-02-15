@@ -9,6 +9,7 @@ $includes_begin;
 #include "../models/ImageCapture_model.h"
 #include "../models/fpga_memory_model.h"
 #include "../../../A10jpeg/models/JPEG_ENCODER_model.h"
+#include "../models/ImageProcessing_model.h"
 $includes_end;
 
 $module_begin("Arria10_top");
@@ -42,6 +43,9 @@ $end
 $init("Arria10_soc_inst"),
 Arria10_soc_inst(0)
 $end
+$init("ip"),
+ip(0)
+$end
     $initialization_end
 {
     $elaboration_begin;
@@ -68,6 +72,9 @@ fpgamem = new fpga_memory_pvt("fpgamem");
 $end;
 $create_component("Arria10_soc_inst");
 Arria10_soc_inst = new Arria10_soc("Arria10_soc_inst");
+$end;
+$create_component("ip");
+ip = new ImageProcessing_pvt("ip");
 $end;
 $bind("fpga_axi_bus->JPEGregisters","jpeg->slave");
 vista_bind(fpga_axi_bus->JPEGregisters, jpeg->slave);
@@ -111,6 +118,15 @@ $end;
 $bind("Console0->TX","Arria10_soc_inst->UART0_RX");
 vista_bind(Console0->TX, Arria10_soc_inst->UART0_RX);
 $end;
+$bind("fpga_axi_bus->IPregisters","ip->slave");
+vista_bind(fpga_axi_bus->IPregisters, ip->slave);
+$end;
+$bind("ip->master","fpga_axi_bus->IPdma");
+vista_bind(ip->master, fpga_axi_bus->IPdma);
+$end;
+$bind("ip->irq","Arria10_soc_inst->irq_21");
+vista_bind(ip->irq, Arria10_soc_inst->irq_21);
+$end;
     $elaboration_end;
   $vlnv_assign_begin;
 m_library = "schematics";
@@ -144,6 +160,9 @@ $end;
 $destruct_component("Arria10_soc_inst");
 delete Arria10_soc_inst; Arria10_soc_inst = 0;
 $end;
+$destruct_component("ip");
+delete ip; ip = 0;
+$end;
     $destructor_end;
   }
 public:
@@ -171,6 +190,9 @@ fpga_memory_pvt *fpgamem;
 $end;
 $component("Arria10_soc_inst");
 Arria10_soc *Arria10_soc_inst;
+$end;
+$component("ip");
+ImageProcessing_pvt *ip;
 $end;
   $fields_end;
   $vlnv_decl_begin;

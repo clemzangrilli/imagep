@@ -15,6 +15,7 @@ Files {
 		{$PRJDIR/models/LinuxFrameBufferDisplay.mb}
 		{$PRJDIR/models/ImageCapture.mb}
 		{$PRJDIR/models/fpga_memory.mb}
+		{$PRJDIR/models/ImageProcessing.mb}
 	 } 
 }
 Designs {{$PRJDIR/main_Arria10.cpp}}
