@@ -43,6 +43,11 @@
 #define FORMAT_JPEG (0)
 #define FORMAT_PNG  (1)
 
+
+#define VISTA_WIDTH 352
+#define VISTA_HEIGHT 288
+
+
 enum fswc_options {
 	OPT_VERSION = 128,
 	OPT_PID,
@@ -670,24 +675,68 @@ int vista_fswc_grab()
 			break;
 		}
 	}
-
-	bmp = bmp_create(config->width, config->height, 24);
-	rgb_pixel_t pixel = {128, 64, 0, 0};
-
+	
+	/* Copy the average bitmap image to a gdImage. */
+	original = gdImageCreateTrueColor(config->width, config->height);
+	if(!original)
+	{
+		ERROR("Out of memory.");
+		free(abitmap);
+		return(-1);
+	}
+	
 	pbitmap = abitmap;
-	for(y = 0; y < config->height; y++) {
+	for(y = 0; y < config->height; y++)
 		for(x = 0; x < config->width; x++)
 		{
-			pixel.red   = *(pbitmap++);
-			pixel.green = *(pbitmap++);
-			pixel.blue  = *(pbitmap++);			
+			int px = x;
+			int py = y;
+			int colour;
+			
+			colour  = (*(pbitmap++) / config->frames) << 16;
+			colour += (*(pbitmap++) / config->frames) << 8;
+			colour += (*(pbitmap++) / config->frames);
+			
+			gdImageSetPixel(original, px, py, colour);
+		}
+	
+	free(abitmap);
+
+        // scaling stuff just for Ian to learn the art of coding
+        if((config->width != VISTA_WIDTH) ||
+           (config->height != VISTA_HEIGHT)) {
+		gdImage *im;	
+		im = gdImageCreateTrueColor(VISTA_WIDTH, VISTA_HEIGHT);
+		if(!im)
+		{
+			WARN("Out of memory.");
+			return(-1);
+		}
+		gdImageCopyResampled(im, original, 0, 0, 0, 0,
+	   		VISTA_WIDTH, VISTA_HEIGHT, gdImageSX(original), gdImageSY(original));
+		gdImageDestroy(original);
+        	original = im;
+        }
+
+	// convert the gdimage to a BMP
+	bmp = bmp_create(VISTA_WIDTH, VISTA_HEIGHT, 24);
+	rgb_pixel_t pixel = {128, 64, 0, 0};
+	int c;
+	for(y = 0; y < VISTA_HEIGHT; y++) {
+		for(x = 0; x < VISTA_WIDTH; x++)
+		{
+			c = gdImageGetPixel(original, x, y);
+			pixel.red   = original->red[c];
+			pixel.green = original->green[c];
+			pixel.blue  = original->blue[c];			
 			bmp_set_pixel(bmp, x, y, pixel);
 		}
 	}
 
+	gdImageDestroy(original);
 	bmp_save(bmp, "/tmp/hope.bmp");
 	bmp_destroy(bmp);
-	free(abitmap);
+
 	return 0;
 }
 
@@ -1156,8 +1205,8 @@ int fswc_getopts(fswebcam_config_t *config, int argc, char *argv[])
 	config->timeout = 10;
 	config->use_read = 0;
 	config->list = 0;
-	config->width = 384;
-	config->height = 288;
+	config->width = VISTA_WIDTH;
+	config->height = VISTA_HEIGHT;
 	config->fps = 0;
 	config->frames = 1;
 	config->skipframes = 0;
@@ -1366,8 +1415,8 @@ int vista_fswc_init()
 	config->timeout = 10;
 	config->use_read = 0;
 	config->list = 0;
-	config->width = 384;
-	config->height = 288;
+	config->width = VISTA_WIDTH;
+	config->height = VISTA_HEIGHT;
 	config->fps = 0;
 	config->frames = 1;
 	config->skipframes = 5;
