@@ -726,9 +726,9 @@ int vista_fswc_grab()
 		for(x = 0; x < VISTA_WIDTH; x++)
 		{
 			c = gdImageGetPixel(original, x, y);
-			pixel.red   = original->red[c];
-			pixel.green = original->green[c];
-			pixel.blue  = original->blue[c];			
+			pixel.red = gdImageRed(original, c);
+			pixel.green = gdImageGreen(original, c);
+			pixel.blue = gdImageRed(original, c);
 			bmp_set_pixel(bmp, x, y, pixel);
 		}
 	}
