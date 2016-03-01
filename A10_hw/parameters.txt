@@ -1,0 +1,17 @@
+@include $env(VISTA_ROOT)/platforms/Arria10/parameters_Arria10.txt
+
+Arria10_top.Arria10_soc_inst.CORTEX_A9MP.PV.cpu0.core.elf_image_file    = ../A10_sw/buildsocvpelf/linux-system-sd.elf
+Arria10_top.Arria10_soc_inst.SDMMC.image_file =  ../A10_sw/buildsocvpsd/sd-angstrom-v2014.12-arria10swvp.img
+
+Arria10_top.Console0.connected = 0
+
+vlan:tcp_napt = :3624 => :8080 ; :5684 => :23 ;:5247 => :69 ; :9547 => :22 ; :8524 => :21 ; :6527 => :53 ; :10010 => :10010 ; :5555 => :5555
+
+#  0xC0000000 (start of FPGA AXI)
+@begintcl
+  set env(FPGA_TOP) Arria10_top.fpga_inst
+@endtcl
+@include ../fpga_hw/parameters.txt
+
+#trace_script = trace.tcl
+

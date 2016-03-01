@@ -2,28 +2,35 @@
 #include "mgc_vista_schematics.h"
 $includes_begin;
 #include <systemc.h>
-#include "models_catalogue.h"
-#include "Arria_schematics/Arria10_soc.h"
 #include "../models/FPGA_AXI_BUS_model.h"
 #include "../models/LinuxFrameBufferDisplay_model.h"
 #include "../models/ImageCapture_model.h"
 #include "../models/fpga_memory_model.h"
-#include "../../../A10jpeg/models/JPEG_ENCODER_model.h"
 #include "../models/ImageProcessing_model.h"
+#include "../../A10jpeg/models/JPEG_ENCODER_model.h"
 $includes_end;
 
-$module_begin("Arria10_top");
-SC_MODULE(Arria10_top) {
+$module_begin("FPGA_fabric");
+SC_MODULE(FPGA_fabric) {
 public:
-  typedef Arria10_top SC_CURRENT_USER_MODULE;
-  Arria10_top(::sc_core::sc_module_name name):
+  typedef FPGA_fabric SC_CURRENT_USER_MODULE;
+  FPGA_fabric(::sc_core::sc_module_name name):
     ::sc_core::sc_module(name)
     $initialization_begin
-$init("Console1"),
-Console1(0)
+$init("FPGAslave"),
+FPGAslave("FPGAslave")
 $end
-$init("Console0"),
-Console0(0)
+$init("FPGAmaster"),
+FPGAmaster("FPGAmaster")
+$end
+$init("ip_irq"),
+ip_irq("ip_irq")
+$end
+$init("ic_irq"),
+ic_irq("ic_irq")
+$end
+$init("jpeg_irq"),
+jpeg_irq("jpeg_irq")
 $end
 $init("fpga_axi_bus"),
 fpga_axi_bus(0)
@@ -40,21 +47,12 @@ $end
 $init("fpgamem"),
 fpgamem(0)
 $end
-$init("Arria10_soc_inst"),
-Arria10_soc_inst(0)
-$end
 $init("ip"),
 ip(0)
 $end
     $initialization_end
 {
     $elaboration_begin;
-$create_component("Console1");
-Console1 = new CONSOLE_pvt("Console1");
-$end;
-$create_component("Console0");
-Console0 = new CONSOLE_pvt("Console0");
-$end;
 $create_component("fpga_axi_bus");
 fpga_axi_bus = new FPGA_AXI_BUS_pvt("fpga_axi_bus");
 $end;
@@ -70,9 +68,6 @@ $end;
 $create_component("fpgamem");
 fpgamem = new fpga_memory_pvt("fpgamem");
 $end;
-$create_component("Arria10_soc_inst");
-Arria10_soc_inst = new Arria10_soc("Arria10_soc_inst");
-$end;
 $create_component("ip");
 ip = new ImageProcessing_pvt("ip");
 $end;
@@ -82,20 +77,8 @@ $end;
 $bind("jpeg->master","fpga_axi_bus->JPEGdma");
 vista_bind(jpeg->master, fpga_axi_bus->JPEGdma);
 $end;
-$bind("Arria10_soc_inst->HPS2FPGA_AXI_Master","fpga_axi_bus->FPGAslave");
-vista_bind(Arria10_soc_inst->HPS2FPGA_AXI_Master, fpga_axi_bus->FPGAslave);
-$end;
-$bind("fpga_axi_bus->FPGAmaster","Arria10_soc_inst->FPGA2HPS_AXI_slave");
-vista_bind(fpga_axi_bus->FPGAmaster, Arria10_soc_inst->FPGA2HPS_AXI_slave);
-$end;
 $bind("ic->master","fpga_axi_bus->ICdma");
 vista_bind(ic->master, fpga_axi_bus->ICdma);
-$end;
-$bind("jpeg->irq","Arria10_soc_inst->irq_20");
-vista_bind(jpeg->irq, Arria10_soc_inst->irq_20);
-$end;
-$bind("ic->irq","Arria10_soc_inst->irq_19");
-vista_bind(ic->irq, Arria10_soc_inst->irq_19);
 $end;
 $bind("fpga_axi_bus->ICregisters","ic->slave");
 vista_bind(fpga_axi_bus->ICregisters, ic->slave);
@@ -106,42 +89,36 @@ $end;
 $bind("fpga_axi_bus->FrameBuffer","fb->from_bus");
 vista_bind(fpga_axi_bus->FrameBuffer, fb->from_bus);
 $end;
-$bind("Arria10_soc_inst->UART1_TX","Console1->RX");
-vista_bind(Arria10_soc_inst->UART1_TX, Console1->RX);
-$end;
-$bind("Arria10_soc_inst->UART0_TX","Console0->RX");
-vista_bind(Arria10_soc_inst->UART0_TX, Console0->RX);
-$end;
-$bind("Console1->TX","Arria10_soc_inst->UART1_RX");
-vista_bind(Console1->TX, Arria10_soc_inst->UART1_RX);
-$end;
-$bind("Console0->TX","Arria10_soc_inst->UART0_RX");
-vista_bind(Console0->TX, Arria10_soc_inst->UART0_RX);
-$end;
 $bind("fpga_axi_bus->IPregisters","ip->slave");
 vista_bind(fpga_axi_bus->IPregisters, ip->slave);
 $end;
 $bind("ip->master","fpga_axi_bus->IPdma");
 vista_bind(ip->master, fpga_axi_bus->IPdma);
 $end;
-$bind("ip->irq","Arria10_soc_inst->irq_21");
-vista_bind(ip->irq, Arria10_soc_inst->irq_21);
+$bind("jpeg->irq","jpeg_irq");
+vista_bind(jpeg->irq, jpeg_irq);
+$end;
+$bind("ip->irq","ip_irq");
+vista_bind(ip->irq, ip_irq);
+$end;
+$bind("fpga_axi_bus->FPGAmaster","FPGAmaster");
+vista_bind(fpga_axi_bus->FPGAmaster, FPGAmaster);
+$end;
+$bind("ic->irq","ic_irq");
+vista_bind(ic->irq, ic_irq);
+$end;
+$bind("FPGAslave","fpga_axi_bus->FPGAslave");
+vista_bind(FPGAslave, fpga_axi_bus->FPGAslave);
 $end;
     $elaboration_end;
   $vlnv_assign_begin;
-m_library = "schematics";
+m_library = "fpga_schematics";
 m_vendor = "";
 m_version = "";
   $vlnv_assign_end;
   }
-  ~Arria10_top() {
+  ~FPGA_fabric() {
     $destructor_begin;
-$destruct_component("Console1");
-delete Console1; Console1 = 0;
-$end;
-$destruct_component("Console0");
-delete Console0; Console0 = 0;
-$end;
 $destruct_component("fpga_axi_bus");
 delete fpga_axi_bus; fpga_axi_bus = 0;
 $end;
@@ -157,9 +134,6 @@ $end;
 $destruct_component("fpgamem");
 delete fpgamem; fpgamem = 0;
 $end;
-$destruct_component("Arria10_soc_inst");
-delete Arria10_soc_inst; Arria10_soc_inst = 0;
-$end;
 $destruct_component("ip");
 delete ip; ip = 0;
 $end;
@@ -167,11 +141,20 @@ $end;
   }
 public:
   $fields_begin;
-$component("Console1");
-CONSOLE_pvt *Console1;
+$socket("FPGAslave");
+tlm::tlm_target_socket< 128U,axi_protocol_types,1,sc_core::SC_ONE_OR_MORE_BOUND > FPGAslave;
 $end;
-$component("Console0");
-CONSOLE_pvt *Console0;
+$socket("FPGAmaster");
+tlm::tlm_initiator_socket< 128U,axi_protocol_types,1,sc_core::SC_ONE_OR_MORE_BOUND > FPGAmaster;
+$end;
+$socket("ip_irq");
+tlm::tlm_initiator_socket< 1U,tlm::tlm_base_protocol_types,1,sc_core::SC_ONE_OR_MORE_BOUND > ip_irq;
+$end;
+$socket("ic_irq");
+tlm::tlm_initiator_socket< 1U,tlm::tlm_base_protocol_types,1,sc_core::SC_ONE_OR_MORE_BOUND > ic_irq;
+$end;
+$socket("jpeg_irq");
+tlm::tlm_initiator_socket< 1U,tlm::tlm_base_protocol_types,1,sc_core::SC_ONE_OR_MORE_BOUND > jpeg_irq;
 $end;
 $component("fpga_axi_bus");
 FPGA_AXI_BUS_pvt *fpga_axi_bus;
@@ -187,9 +170,6 @@ JPEG_ENCODER_pvt *jpeg;
 $end;
 $component("fpgamem");
 fpga_memory_pvt *fpgamem;
-$end;
-$component("Arria10_soc_inst");
-Arria10_soc *Arria10_soc_inst;
 $end;
 $component("ip");
 ImageProcessing_pvt *ip;

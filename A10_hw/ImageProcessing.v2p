@@ -2,6 +2,7 @@ ProjectName ImageProcessing
 Files {
 	 Schematics {
 		{$PRJDIR/schematics/Arria10_top.h}
+		{$PRJDIR/../fpga_hw/schematics/FPGA_fabric.h}
 	 } 
 	 Sources {
 		{$PRJDIR/main_Arria10.cpp}
@@ -11,11 +12,11 @@ Files {
 		{$VISTA_ROOT/platforms/Arria10/Arria_models/MemoryFireWall.h}
 	 } 
 	 Models {
-		{$PRJDIR/models/FPGA_AXI_BUS.mb}
-		{$PRJDIR/models/LinuxFrameBufferDisplay.mb}
-		{$PRJDIR/models/ImageCapture.mb}
-		{$PRJDIR/models/fpga_memory.mb}
-		{$PRJDIR/models/ImageProcessing.mb}
+		{$PRJDIR/../fpga_hw/models/LinuxFrameBufferDisplay.mb}
+		{$PRJDIR/../fpga_hw/models/ImageCapture.mb}
+		{$PRJDIR/../fpga_hw/models/fpga_memory.mb}
+		{$PRJDIR/../fpga_hw/models/FPGA_AXI_BUS.mb}
+		{$PRJDIR/../fpga_hw/models/ImageProcessing.mb}
 	 } 
 }
 Designs {{$PRJDIR/main_Arria10.cpp}}
