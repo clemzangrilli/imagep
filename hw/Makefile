@@ -14,11 +14,11 @@ SRCS = $(wildcard *.cpp) $(wildcard $(MODELS)/*.cpp)
 
 all: $(PROJECTEXE)
 
-$(PROJECTEXE): $(SRCS) ../../A10jpeg/objdir/libvmodels.a
+$(PROJECTEXE): $(SRCS) ../../jpeg/objdir/libvmodels.a
 	vista_build_project $(PROJECT)
 
-../../A10jpeg/objdir/libvmodels.a: ../../A10jpeg/jpeg_algorithm/jpeg.cpp
-	cd ../../A10jpeg && make
+../../jpeg/objdir/libvmodels.a: ../../jpeg/jpeg_algorithm/jpeg.cpp
+	cd ../../jpeg && make
 
 run: $(PROJECTEXE)
 	vista_simulate $(PROJECT)

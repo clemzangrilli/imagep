@@ -19,7 +19,6 @@ Files {
 	 } 
 }
 Designs {{$PRJDIR/main_Arria10.cpp}}
-Simulations /home/jon/work/git/A10imagep/hw/ImageProcessing/sim
 Folders {
 	 Sources {*.c *.cpp *.C *.cxx *.cc} 
 	 {Public Headers} {*.h *.hpp *.H *.hxx *.hh} 
@@ -29,11 +28,11 @@ Folders {
 	 {Linked Binaries} {*.o *.a *.so} 
 	 {Other Binaries} {*.exe *.x} 
 }
-IncludePaths {{$PRJDIR/../../A10jpeg/models} {$PRJDIR/../../A10jpeg/jpeg_algorithm} {$PRJDIR/../../A10jpeg/jpeg_algorithm/catapult_include} {$PRJDIR/fswebcam}}
+IncludePaths {{$PRJDIR/../../jpeg/models} {$PRJDIR/../../jpeg/jpeg_algorithm} {$PRJDIR/../../jpeg/jpeg_algorithm/catapult_include} {$PRJDIR/fswebcam}}
 GeneralCompilationOptions -Wall
 AlwaysCompileInCPPMode 1
 LinkPackages {Arria10_catalogue Arria10 models_catalogue model_builder}
-LinkObjects {{$PRJDIR/fswebcam/libfswebcam.a} {$PRJDIR/../../A10jpeg/objdir/libvmodels.a}}
+LinkObjects {{$PRJDIR/fswebcam/libfswebcam.a} {$PRJDIR/../../jpeg/objdir/libvmodels.a}}
 LinkOptions -lgd
 ProjectLibraryType archive
 ProjectComponentsLibraryPath {$PRJDIR/$PRJFILE_BASENAME/interfaces}
