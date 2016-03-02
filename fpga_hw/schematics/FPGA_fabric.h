@@ -7,7 +7,7 @@ $includes_begin;
 #include "../models/ImageCapture_model.h"
 #include "../models/fpga_memory_model.h"
 #include "../models/ImageProcessing_model.h"
-#include "../../A10jpeg/models/JPEG_ENCODER_model.h"
+#include "../../../jpeg/models/JPEG_ENCODER_model.h"
 $includes_end;
 
 $module_begin("FPGA_fabric");

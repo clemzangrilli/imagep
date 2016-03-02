@@ -13,8 +13,8 @@
  } 
  page  { w 11000 h 11000 type vhdstd orient portr  } 
 grid 10 
- } #idit - save unit (named FPGA_fabric while saving) on Tue Mar  1 11:11:56 2016
-#SW version: 2008.12 v4.1.1.beta2 build 1. Date: Feb  9 2016. License: 1.1 
+ } #idit - save unit (named FPGA_fabric while saving) on Wed Mar  2 15:23:50 2016
+#SW version: 2008.12 v4.1.1.beta2 build 1. Date: Feb 27 2016. License: 1.1 
 version: 12 
 ipxactvendor Mentor.com 
 ipxactversion 1.0 
