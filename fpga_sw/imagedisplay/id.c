@@ -13,12 +13,15 @@
 #define IWIDTH 352
 #define IHEIGHT 288
 
-#define FPGA_BASE     0xc0000000
-#define IC_BASE       0xd0000000
+#ifndef FPGA_BASE
+#define FPGA_BASE     0xC0000000  // for Arria10
+#endif
+
+#define IC_BASE       FPGA_BASE + 0x10000000
 #define IC_REG_SIZE   0x1000
-#define IP_BASE       0xd0002000
+#define IP_BASE       FPGA_BASE + 0x10002000
 #define IP_REG_SIZE   0x1000
-#define FPGA_BUFFER   0xe0000000
+#define FPGA_BUFFER   FPGA_BASE + 0x20000000
 #define FPGA_BUF_SIZE 0x00200000
 
 typedef struct {

@@ -1,10 +1,17 @@
 
 CROSS_COMPILER ?= ../../../linaro/gcc-linaro-arm-linux-gnueabihf-4.8-2013.12_linux/bin/arm-linux-gnueabihf-
 
+#CROSS_COMPILER ?= /store/tools/SDK/2015.4/gnu/arm/lin/bin/arm-xilinx-linux-gnueabi-
+
 CC = ${CROSS_COMPILER}gcc
 
+
+
 id: id.c 
-	${CC} id.c -o id -mfloat-abi=hard -lm
+	${CC} id.c -o id -lm
+
+zynq: id.c
+	${CC} -DFPGA_BASE=0x40000000 id.c -o id -lm
 
 scp: id 
 	scp -P 9547 id root@localhost:/home/root/id
