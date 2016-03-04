@@ -140,7 +140,7 @@ unsigned char* SW_ProcessImage() {
 	char *b = (char*) malloc(ic_reg->SIZE + 1);
 	pixel_t p;
 	int i, j, x, y;
-	int res = 8;
+	int res = 4;
 	for (y = 0; y < IHEIGHT; y += res) {
 		for (x = 0; x < IWIDTH; x += res) {
 			getPixel((unsigned char*) ic_target, x, y, &p);

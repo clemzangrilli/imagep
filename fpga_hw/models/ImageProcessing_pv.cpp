@@ -98,7 +98,7 @@ void ImageProcessing_pv::thread() {
 
     pixel_t p;
     int i, j, x, y;
-    int res = 8;
+    int res = 4;
     for (y = 0; y < IHEIGHT; y+=res) {
       for(x = 0; x < IWIDTH; x+=res) {
         getPixel(b, x, y, &p);
