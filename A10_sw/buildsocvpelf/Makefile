@@ -9,7 +9,7 @@ BOOTLOADER	= boot.S
 KERNEL		?= zImage
 KERNEL_HDR_SZ	= 0x0	# 0x40 for uImage
 
-IMAGE		= linux-system.axf
+IMAGE		?= linux-system.axf
 LD_SCRIPT	= model.lds.S
 
 CROSS_COMPILE	?= arm-linux-gnueabi-

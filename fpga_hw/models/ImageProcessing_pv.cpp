@@ -20,6 +20,7 @@
 //* 
 //* Model Builder version: 4.2alpha1
 //* Generated on: Feb. 15, 2016 11:27:19 AM, (user: vista)
+//* Automatically merged on: Mar. 08, 2016 04:27:12 PM, (user: jon)
 //*>
 
 
@@ -177,3 +178,5 @@ bool ImageProcessing_pv::slave_get_direct_memory_ptr(mb_address_type address, tl
 
  
 void ImageProcessing_pv::cb_transport_dbg_CONTROL(tlm::tlm_generic_payload& trans) {}
+
+// in order to minimize merging conflicts, we recommend to add your functions after this comment

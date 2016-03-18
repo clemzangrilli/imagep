@@ -22,6 +22,7 @@
 //* Generated on: Jan. 20, 2016 10:06:23 AM, (user: markca)
 //* Automatically merged on: Jan. 20, 2016 10:08:36 AM, (user: markca)
 //* Automatically merged on: Feb. 02, 2016 10:59:37 AM, (user: markca)
+//* Automatically merged on: Mar. 08, 2016 04:27:12 PM, (user: jon)
 //*>
 
 
@@ -129,3 +130,5 @@ bool ImageCapture_pv::slave_get_direct_memory_ptr(mb_address_type address, tlm::
 
  
 void ImageCapture_pv::cb_transport_dbg_CONTROL(tlm::tlm_generic_payload& trans) {}
+
+// in order to minimize merging conflicts, we recommend to add your functions after this comment

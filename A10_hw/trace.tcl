@@ -39,17 +39,17 @@ trace_linux_process jpeghw {
   insert_tracepoint jpeghw_1 -at-function-entry jpgencoder -do-raw {
     mysimtime = get_time_stamp();
     printf("Setting timing to DYNAMIC\n");
-    set_parameter("Arria10_top.jpeg.lt_policy_modeling", "DYNAMIC");
-    set_parameter("Arria10_top.fpgamem.lt_policy_modeling", "DYNAMIC");
-    set_parameter("Arria10_top.fpga_axi_bus.lt_policy_modeling", "DYNAMIC");
+    set_parameter("Arria10_top.fpga_inst.jpeg.lt_policy_modeling", "DYNAMIC");
+    set_parameter("Arria10_top.fpga_inst.fpgamem.lt_policy_modeling", "DYNAMIC");
+    set_parameter("Arria10_top.fpga_inst.fpga_axi_bus.lt_policy_modeling", "DYNAMIC");
   }
   insert_tracepoint jpeghw_2 -at-function-exit jpgencoder -do-raw {
     printf("Setting timing back to STATIC\n");
     mysimtime = get_time_stamp() - mysimtime;
     printf("jpgencoder function took %d ms\n", mysimtime/1000000);
-    set_parameter("Arria10_top.jpeg.lt_policy_modeling", "STATIC");
-    set_parameter("Arria10_top.fpgamem.lt_policy_modeling", "STATIC");
-    set_parameter("Arria10_top.fpga_axi_bus.lt_policy_modeling", "STATIC");
+    set_parameter("Arria10_top.fpga_inst.jpeg.lt_policy_modeling", "STATIC");
+    set_parameter("Arria10_top.fpga_inst.fpgamem.lt_policy_modeling", "STATIC");
+    set_parameter("Arria10_top.fpga_inst.fpga_axi_bus.lt_policy_modeling", "STATIC");
   }
 }
 
@@ -63,18 +63,18 @@ trace_linux_process { jpeghw libc-2* libstdc++* } {
 trace_attribute Arria10_top.Arria10_soc_inst.CORTEX_A9MP.PV.cpu0.core.core_state
 trace_attribute Arria10_top.Arria10_soc_inst.CORTEX_A9MP.PV.cpu1.core.core_state
 
-trace_socket   Arria10_top.jpeg.slave
-trace_socket   Arria10_top.jpeg.master
-trace_socket   Arria10_top.jpeg.irq
-trace_socket   Arria10_top.fpgamem.slave
+trace_socket   Arria10_top.fpga_inst.jpeg.slave
+trace_socket   Arria10_top.fpga_inst.jpeg.master
+trace_socket   Arria10_top.fpga_inst.jpeg.irq
+trace_socket   Arria10_top.fpga_inst.fpgamem.slave
 
-trace_attribute Arria10_top.jpeg.PV.jpeg_delay
+trace_attribute Arria10_top.fpga_inst.jpeg.PV.jpeg_delay
 
-trace_register Arria10_top.jpeg.PV.inputaddr
-trace_register Arria10_top.jpeg.PV.input_w_h_size
-trace_register Arria10_top.jpeg.PV.outputaddr
-trace_register Arria10_top.jpeg.PV.outputlength
-trace_register Arria10_top.jpeg.PV.status
-trace_register Arria10_top.jpeg.PV.start
+trace_register Arria10_top.fpga_inst.jpeg.PV.inputaddr
+trace_register Arria10_top.fpga_inst.jpeg.PV.input_w_h_size
+trace_register Arria10_top.fpga_inst.jpeg.PV.outputaddr
+trace_register Arria10_top.fpga_inst.jpeg.PV.outputlength
+trace_register Arria10_top.fpga_inst.jpeg.PV.status
+trace_register Arria10_top.fpga_inst.jpeg.PV.start
 
 #enable_coverage -design custom.dgn -test custom.tst

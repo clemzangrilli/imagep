@@ -3,8 +3,11 @@ kernel is a copy of the Altera Angstrom kernel source.
 
 kernel_patches/arch/arm/boot/dts/socfpga_arria10_swvp.dts has been modified to add
 a number of user HW elements instantiated in the FPGA fabric.
-Run kernel/setup.sh to rebuild the kernel
-Run kernel/linux-socfpga/make
-Run buildsocvpelf/run.txt to recreate the elf image.
 
-User program examples accessing custom HW elements are under jpeg and imagecapture dirs.
+Makefile in this directory will rebuild the kernel and the elf image based on changes
+under kernel_patches.
+
+User program examples accessing custom HW elements are under ../fpga_sw:
+  jpegcpp: Uses fpga jpeg encode block
+  imagecapture: Captures image from host camera
+  imagedisplay: Modifies and displays original image and modified image

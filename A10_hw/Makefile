@@ -16,24 +16,27 @@ all: $(PROJECTEXE)
 
 .PHONY : ../fpga_hw/fswebcam
 
-$(PROJECTEXE): $(SRCS) ../../jpeg/objdir/libvmodels.a ../fpga_hw/fswebcam
+$(PROJECTEXE): $(SRCS) ../../jpeg/objdir/libvmodels.a ../fpga_hw/fswebcam/libfswebcam.a
 	vista_build_project $(PROJECT)
 
-../fpga_hw/fswebcam:
-	make -C $@
+../fpga_hw/fswebcam/libfswebcam.a:
+	make -C ../fpga_hw/fswebcam
 
 ../../jpeg/objdir/libvmodels.a: ../../jpeg/jpeg_algorithm/jpeg.cpp
 	cd ../../jpeg && make
 
-run: $(PROJECTEXE)
+run: $(PROJECTEXE) ../A10_sw/buildsocvpelf/linux-system-sd.elf
 	vista_simulate $(PROJECT)
 
-vista: $(PROJECTEXE)
+vista: $(PROJECTEXE) ../A10_sw/buildsocvpelf/linux-system-sd.elf
 	vista -no-stop-after-elaboration -simscript simscript.tcl -exec -project $(PROJECT)
 
-batch: $(PROJECTEXE)
+batch: $(PROJECTEXE) ../A10_sw/buildsocvpelf/linux-system-sd.elf
 	vista -batch -exec -project $(PROJECT)
 
+../A10_sw/buildsocvpelf/linux-system-sd.elf:
+	make -C ../A10_sw
+ 
 COMMAND = "if {![does_tlm_library_exist $(MODELS)]} \
               {create_tlm_library $(MODELS) $(MODELS)}; \
            reload_tlm_library $(MODELS);\
