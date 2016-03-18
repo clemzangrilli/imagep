@@ -2,7 +2,7 @@
 select_cluster "Arria10_top.Arria10_soc_inst.CORTEX_A9MP.PV"
 
 #trace_linux ../sw/kernel/linux-socfpga/vmlinux -libc ../../local/libc-2.20.so
-trace_linux ../sw/kernel/linux-socfpga/vmlinux
+trace_linux ../A10_sw/kernel/linux-socfpga/vmlinux
 
 trace_linux_process mem_test {
   add_symbol_file ../sw/test/mem_test
