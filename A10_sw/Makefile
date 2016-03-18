@@ -7,7 +7,7 @@ KERNEL_PATCH_FILES = $(shell find kernel_patches -type f)
 ZIMAGE = kernel/linux-socfpga/arch/arm/boot/zImage
 DTB    = kernel/linux-socfpga/arch/arm/boot/dts/socfpga_arria10_swvp.dtb
 
-all: kernel/linux-socfpga/vmlinux buildsocvpsd/sd-angstrom-v2014.12-arria10swvp.img buildsocvpelf/linux-system-sd.elf
+all: kernel/linux-socfpga/vmlinux filesystem/Software/arria10/linux/sd-angstrom-v2014.12-arria10swvp.img buildsocvpelf/linux-system-sd.elf
 
 kernel/linux-socfpga/vmlinux: $(KERNEL_PATCH_FILES) kernel/linux-socfpga.tar.xz
 	if [ ! -d kernel/linux-socfpga ]; then cd kernel && tar xf linux-socfpga.tar.xz; fi
@@ -18,11 +18,11 @@ kernel/linux-socfpga/vmlinux: $(KERNEL_PATCH_FILES) kernel/linux-socfpga.tar.xz
 kernel/linux-socfpga.tar.xz:
 	cd kernel && wget ftp://mentorweb.wv.mentorg.com/pub/a10ip/linux-socfpga.tar.xz
 
-buildsocvpsd/sd-angstrom-v2014.12-arria10swvp.img: 
-	if [ ! -f  buildsocvpsd/sd-angstrom-v2014.12-arria10swvp.img.tar.gz ]; then \
-	  cd buildsocvpsd && \
-	  wget ftp://mentorweb.wv.mentorg.com/pub/a10ip/sd-angstrom-v2014.12-arria10swvp.img.tar.gz; fi
-	cd buildsocvpsd && gzip -cd sd-angstrom-v2014.12-arria10swvp.img.tar.gz | tar xvf -
+filesystem/Software/arria10/linux/sd-angstrom-v2014.12-arria10swvp.img: 
+	if [ ! -f filesystem/linux-arria10swvp-socfpga-3.10-ltsi-angstrom-v2014.12.tgz ]; then \
+	  mkdir -p filesystem && cd filesystem && \
+	  wget --no-cache http://rocketboards.org/foswiki/pub/Documentation/Arria10SoCVPLinux/linux-arria10swvp-socfpga-3.10-ltsi-angstrom-v2014.12.tgz; fi
+	cd filesystem && tar xvf linux-arria10swvp-socfpga-3.10-ltsi-angstrom-v2014.12.tgz
 
 kernel/linux-socfpga/arch/arm/boot/zImage: kernel/linux-socfpga/vmlinux
 

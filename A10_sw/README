@@ -7,6 +7,11 @@ a number of user HW elements instantiated in the FPGA fabric.
 Makefile in this directory will rebuild the kernel and the elf image based on changes
 under kernel_patches.
 
+The prebuilt filesystem is fetched from the Altera Rocketboard ftp site.
+
+For instructions on how to build a filesytem from scratch, please refer to:
+https://rocketboards.org/foswiki/view/Documentation/AlteraArria10SoCVirtualPlatformBuildLinux
+
 User program examples accessing custom HW elements are under ../fpga_sw:
   jpegcpp: Uses fpga jpeg encode block
   imagecapture: Captures image from host camera

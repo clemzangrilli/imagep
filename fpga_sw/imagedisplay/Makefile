@@ -12,7 +12,7 @@ id2: id2.c
 	${CC} id2.c -o id2 -lm -lpthread
 
 scp: id id2
-	scp -P 9547 id? root@localhost:/home/root/
+	scp -P 9547 id id2 root@localhost:/home/root/
 
 clean:
 	rm -f id id2 *.o *~
