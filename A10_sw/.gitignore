@@ -1,0 +1,5 @@
+buildsocvpelf/linux-system-sd.elf
+buildsocvpelf/model.lds
+buildsocvpsd/sd-angstrom-v2014.12-arria10swvp.img
+kernel/linux-socfpga.tar.xz
+kernel/linux-socfpga
