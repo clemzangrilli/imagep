@@ -12,7 +12,7 @@ PROJECTEXE = $(PROJECT)/build/D_PRJDIR_/$(SC_MAIN).exe
 
 SRCS = $(wildcard *.cpp) $(wildcard ../fpga_hw/$(MODELS)/*.cpp) $(wildcard ../fpga_hw/$(MODELS)/*.h)
 
-all: $(PROJECTEXE)
+all: $(PROJECTEXE) ../A10_sw/buildsocvpelf/linux-system-sd.elf
 
 .PHONY : ../fpga_hw/fswebcam
 
