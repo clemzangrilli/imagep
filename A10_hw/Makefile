@@ -44,7 +44,7 @@ COMMAND = "if {![does_tlm_library_exist $(MODELS)]} \
              save_model -g TLM/$(MODELS)/[lindex [split \$$n .] 0] }"
 
 mb:
-	if [ -e $(MODELS) ]; then vista_model_builder -c $(COMMAND); fi
+	cd ../fpga_hw && if [ -e $(MODELS) ]; then vista_model_builder -c $(COMMAND); fi
 
 clean:
 	rm -rf vista_work $(PROJECT) sim papoulis_project
