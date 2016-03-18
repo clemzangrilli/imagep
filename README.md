@@ -24,11 +24,11 @@ The toolchain should be extracted in a linaro directory parrallel to the imagep 
 Assuming everything went smoothly this should boot linux and open the framebuffer.
 
 To add a program to display jpg or bmp files on the framebuffer execute the following in the console.
-> opkg update
-> opkg install fbida
+- opkg update
+- opkg install fbida
 
 You should then be able to display an image with:
-> fbi -T 1 -d /dev/fb0 <image-file>
+- fbi -T 1 -d /dev/fb0 <image-file>
 
 This project depends on the jpeg project.  If the jpeg project is cloned into the directory
 parrallel to the imagep project all of the links and references should work correctly.
