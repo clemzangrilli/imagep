@@ -11,6 +11,11 @@
 #include <math.h>
 #include <pthread.h>
 
+#include <signal.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+
 #define IWIDTH 352
 #define IHEIGHT 288
 
@@ -242,6 +247,11 @@ void *sw_thread_entry(void *ptr) {
 	}
 }
 
+void my_handler(int s){
+   printf("*** Caught signal\n");
+    exit(0); 
+}
+
 int main(void) {
 
 	unsigned long long st, et, t1, t2;
@@ -251,6 +261,13 @@ int main(void) {
 	struct fb_var_screeninfo vinfo;
 	struct fb_fix_screeninfo finfo;
 	long int screensize = 0;
+
+ struct sigaction sigIntHandler;
+ sigIntHandler.sa_handler = my_handler;
+ sigemptyset(&sigIntHandler.sa_mask);
+ sigIntHandler.sa_flags = 0;
+ sigaction(SIGINT, &sigIntHandler, NULL);
+
 
 	printf("Opening ImageCapture /dev/uio0\n");
 	icDevice = open("/dev/uio0", O_RDWR);
