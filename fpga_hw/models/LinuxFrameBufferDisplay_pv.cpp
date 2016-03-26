@@ -90,12 +90,17 @@ LinuxFrameBufferDisplay_pv::updateDisplay()
 // Read callback for from_bus port.
 // Returns true when successful.
 bool LinuxFrameBufferDisplay_pv::from_bus_callback_read(mb_address_type address, unsigned char* data, unsigned size) {
+
+  memcpy(data, (unsigned char*) m_client->get_buffer() + address, size);
+
   return true;
 }
 
 // Write callback for from_bus port.
 // Returns true when successful.
 bool LinuxFrameBufferDisplay_pv::from_bus_callback_write(mb_address_type address, unsigned char* data, unsigned size) {
+  memcpy((unsigned char*) m_client->get_buffer() + address, data, size);
+
   return true;
 } 
 
