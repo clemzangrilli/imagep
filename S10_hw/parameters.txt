@@ -1,0 +1,18 @@
+@include parameters_Stratix10.txt
+
+top.stratix10_inst.CPU.cpu.elf_image_file = ../S10_sw/boot/linux-system-sd.elf
+#top.stratix10_inst.SDMMC.image_file = ../S10_sw/filesystem/filesystem.ext3
+
+top.stratix10_inst.Console0.connected = 0
+
+vlan:tcp_napt = :3624 => :8080 ; :5684 => :23 ;:5247 => :69 ; :9547 => :22 ; :8524 => :21 ; :6527 => :53 ; :10010 => :10010 ; :5555 => :5555
+
+#  0xC0000000 (start of FPGA AXI)
+@begintcl
+  set env(FPGA_TOP) top.fpga_inst
+@endtcl
+@include ../fpga_hw/parameters.txt
+
+#trace_script = trace.tcl
+
+#gdbstub_port=1234

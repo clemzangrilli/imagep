@@ -1,0 +1,45 @@
+ProjectName ImageProcessing
+Files {
+	 Schematics {
+		{$PRJDIR/../fpga_hw/schematics/FPGA_fabric.h}
+		{$PRJDIR/schematics/top.h}
+	 } 
+	 Sources {
+		{$PRJDIR/main_Stratix10.cpp}
+	 } 
+	 {Public Headers} {
+		{$VISTA_ROOT/platforms/Arria10/Arria_models/MemoryFireWall.h}
+	 } 
+	 Models {
+		{$PRJDIR/../fpga_hw/models/LinuxFrameBufferDisplay.mb}
+		{$PRJDIR/../fpga_hw/models/ImageCapture.mb}
+		{$PRJDIR/../fpga_hw/models/fpga_memory.mb}
+		{$PRJDIR/../fpga_hw/models/FPGA_AXI_BUS.mb}
+		{$PRJDIR/../fpga_hw/models/ImageProcessing.mb}
+	 } 
+}
+Designs {{$PRJDIR/main_Stratix10.cpp}}
+Folders {
+	 Sources {*.c *.cpp *.C *.cxx *.cc} 
+	 {Public Headers} {*.h *.hpp *.H *.hxx *.hh} 
+	 Models *.mb 
+	 Schematics {} 
+	 Documentation {*.txt *.TXT *.doc *.DOC *.pdf *.PDF *.html *.HTML *.htm *.HTM *.ps *.PS} 
+	 {Linked Binaries} {*.o *.a *.so} 
+	 {Other Binaries} {*.exe *.x} 
+}
+IncludePaths {{$PRJDIR/../../jpeg/jpeg_algorithm} {$PRJDIR/../../jpeg/jpeg_algorithm/catapult_include} {$PRJDIR/../fpga_hw/fswebcam} {$PRJDIR/../../../../tools/vista4.2alpha1/platforms/Stratix10/Arria_schematics} {$PRJDIR/../../../../tools/vista4.2alpha1/platforms/Stratix10/Arria_models}}
+GeneralCompilationOptions -Wall
+AlwaysCompileInCPPMode 1
+LinkPackages {models_catalogue model_builder Stratix10}
+LinkObjects {{$PRJDIR/../fpga_hw/fswebcam/libfswebcam.a} {$PRJDIR/../../jpeg/objdir/libvmodels.a}}
+LinkOptions -lgd
+ProjectLibraryType archive
+ProjectComponentsLibraryPath {$PRJDIR/$PRJFILE_BASENAME/interfaces}
+ProjectWorkingDirectory {$PRJDIR/$PRJFILE_BASENAME/build}
+HasTLMSupport 0
+CompiledWithTLMSupport 0
+IsUsePathVariables 1
+PlatformName ImageProcessing
+ProjectReadOnly 0
+ProjectBuildMultiPlatform 0
