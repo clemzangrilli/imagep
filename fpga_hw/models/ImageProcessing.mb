@@ -10,8 +10,8 @@ add_port "master" /TLM/protocols/axi master 128 -bind_mode mandatory
 add_port "irq" /TLM/protocols/signal master 1 -bind_mode mandatory
 
 # === parameters ===
-# usage: add_parameter <parameter_name> <default_value> <type:string|unsigned|int>
-# example: add_parameter "parameter1" 12 unsigned
+add_parameter "ip_sequential" 500 uint32 {}
+add_parameter "ip_power" 500 uint32 {}
 
 # === auto parameters ===
 set_auto_parameter_default "clock" {10 ns} time {}
@@ -41,6 +41,9 @@ declare_register slave CONTROL 0x0 {} -rw_access rw -trigger w -width 32
 declare_register slave SOURCE 0x4 {} -rw_access rw -width 32
 declare_register slave SIZE 0x8 {} -rw_access rw -width 32
 declare_register slave TARGET 0xC {} -rw_access rw -width 32
+set_sync_all 0
+add_sequential_policy master.WRITE -cause CONTROL.write -latency ip_sequential -sync 0 -power ip_power
+set_nominal_clock 100
 
 # === generate options ===
 set_generate_kind "pvt" ;# should be one of: model|pv|pvt
