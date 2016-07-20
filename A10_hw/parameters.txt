@@ -14,3 +14,4 @@ vlan:tcp_napt = :3624 => :8080 ; :5684 => :23 ;:5247 => :69 ; :9547 => :22 ; :85
 
 #trace_script = trace.tcl
 
+#gdbstub_port     = 2345
