@@ -14,7 +14,7 @@ GIC_DIST_BASE   := 0xfffc1000
 GIC_CPU_BASE    := 0xfffc2000
 CNTFRQ		:= 0x01800000	# 24Mhz
 
-INITRD_FLAGS	:= -DUSE_INITRD
+#INITRD_FLAGS	:= -DUSE_INITRD
 CPPFLAGS	+= $(INITRD_FLAGS) -g
 CPPFLAGS	+= -Ulinux
 
@@ -31,7 +31,6 @@ FILESYSTEM_START:= $(shell echo $$(($(PHYS_OFFSET) + $(FS_OFFSET))))
 FILESYSTEM_SIZE	:= $(shell stat -Lc %s $(FILESYSTEM) 2>/dev/null || echo 0)
 FILESYSTEM_END	:= $(shell echo $$(($(FILESYSTEM_START) + $(FILESYSTEM_SIZE))))
 
-DTB		?= stratix10_swvp.dtb
 FDT_SRC		:= $(DTB)
 FDT_INCL_REGEX	:= \(/include/[[:space:]]*"\)\([^"]\+\)\(".*\)
 FDT_DEPS	:= $(FDT_SRC) $(addprefix $(dir $(FDT_SRC)), $(shell sed -ne 'sq$(strip $(FDT_INCL_REGEX)q\2q p' < $(FDT_SRC))))
@@ -66,8 +65,9 @@ model.lds: $(LD_SCRIPT) Makefile
 #fdt.dtb: $(FDT_DEPS) Makefile
 fdt.dtb: Makefile
 	$(DTC) -O dts -I dtb $(DTB) | \
-	sed -r -e 's/linux,initrd-start = <0x[0-9a-f]+>/linux,initrd-start = <'$(FILESYSTEM_START)'>/' | \
-	sed -r -e 's/linux,initrd-end = <0x[0-9a-f]+>/linux,initrd-end = <'$(FILESYSTEM_END)'>/' | \
+	sed -e 's%rdinit=/sbin/init%rootwait root=/dev/mmcblk0p2%' | \
+#	sed -r -e 's/linux,initrd-start = <0x[0-9a-f]+>/linux,initrd-start = <'$(FILESYSTEM_START)'>/' | \
+#	sed -r -e 's/linux,initrd-end = <0x[0-9a-f]+>/linux,initrd-end = <'$(FILESYSTEM_END)'>/' | \
 	$(DTC) -O dtb -o $@ -
 	
 # The filesystem archive might not exist if INITRD is not being used
