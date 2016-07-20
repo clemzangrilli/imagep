@@ -3,7 +3,7 @@
 $includes_begin;
 #include <systemc.h>
 #include "../../fpga_hw/schematics/FPGA_fabric.h"
-#include "../../../../platforms/stratix10/src/Arria_schematics/Stratix10_top.h"
+#include "../../../platforms/stratix10/src/Arria_schematics/Stratix10_top.h"
 $includes_end;
 
 $module_begin("top");
@@ -31,17 +31,17 @@ $end;
 $bind("fpga_inst->jpeg_irq","stratix10_inst->irq_20");
 vista_bind(fpga_inst->jpeg_irq, stratix10_inst->irq_20);
 $end;
-$bind("stratix10_inst->AXI_Master","fpga_inst->FPGAslave");
-vista_bind(stratix10_inst->AXI_Master, fpga_inst->FPGAslave);
-$end;
-$bind("fpga_inst->FPGAmaster","stratix10_inst->AXI_slave");
-vista_bind(fpga_inst->FPGAmaster, stratix10_inst->AXI_slave);
-$end;
 $bind("fpga_inst->ip_irq","stratix10_inst->irq_21");
 vista_bind(fpga_inst->ip_irq, stratix10_inst->irq_21);
 $end;
 $bind("fpga_inst->ic_irq","stratix10_inst->irq_19");
 vista_bind(fpga_inst->ic_irq, stratix10_inst->irq_19);
+$end;
+$bind("stratix10_inst->HPS2FPGA_Master","fpga_inst->FPGAslave");
+vista_bind(stratix10_inst->HPS2FPGA_Master, fpga_inst->FPGAslave);
+$end;
+$bind("fpga_inst->FPGAmaster","stratix10_inst->FPGA2HPS_Slave");
+vista_bind(fpga_inst->FPGAmaster, stratix10_inst->FPGA2HPS_Slave);
 $end;
     $elaboration_end;
   $vlnv_assign_begin;

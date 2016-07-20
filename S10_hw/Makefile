@@ -12,7 +12,8 @@ PROJECTEXE = $(PROJECT)/build/D_PRJDIR_/$(SC_MAIN).exe
 
 SRCS = $(wildcard *.cpp) $(wildcard ../fpga_hw/$(MODELS)/*.cpp) $(wildcard ../fpga_hw/$(MODELS)/*.h)
 
-all: $(PROJECTEXE) ../S10_sw/boot/linux-system-sd.elf
+all: $(PROJECTEXE) 
+#../S10_sw/boot/linux-system-sd.elf
 
 .PHONY : ../fpga_hw/fswebcam
 
@@ -25,14 +26,17 @@ $(PROJECTEXE): $(SRCS) ../../jpeg/objdir/libvmodels.a ../fpga_hw/fswebcam/libfsw
 ../../jpeg/objdir/libvmodels.a: ../../jpeg/jpeg_algorithm/jpeg.cpp
 	cd ../../jpeg && make
 
-run: $(PROJECTEXE) ../S10_sw/boot/linux-system-sd.elf
-	ssh-keygen -f "/home/vista/.ssh/known_hosts" -R [localhost]:9547
+run: $(PROJECTEXE) 
+#../S10_sw/boot/linux-system-sd.elf
+	ssh-keygen -f "$(HOME)/.ssh/known_hosts" -R [localhost]:9547
 	vista_simulate $(PROJECT)
 
-vista: $(PROJECTEXE) ../S10_sw/boot/linux-system-sd.elf
+vista: $(PROJECTEXE)
+# ../S10_sw/boot/linux-system-sd.elf
 	vista -no-stop-after-elaboration -simscript simscript.tcl -exec -project $(PROJECT)
 
-batch: $(PROJECTEXE) ../S10_sw/boot/linux-system-sd.elf
+batch: $(PROJECTEXE)
+# ../S10_sw/boot/linux-system-sd.elf
 	vista -batch -exec -project $(PROJECT)
 
 ../S10_sw/boot/linux-system-sd.elf:

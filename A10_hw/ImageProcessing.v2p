@@ -20,6 +20,7 @@ Files {
 	 } 
 }
 Designs {{$PRJDIR/main_Arria10.cpp}}
+Simulations /home/markca/store/data/vista/imagep/A10_hw/ImageProcessing/sim
 Folders {
 	 Sources {*.c *.cpp *.C *.cxx *.cc} 
 	 {Public Headers} {*.h *.hpp *.H *.hxx *.hh} 

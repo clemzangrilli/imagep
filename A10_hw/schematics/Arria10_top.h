@@ -3,8 +3,8 @@
 $includes_begin;
 #include <systemc.h>
 #include "models_catalogue.h"
-#include "Arria_schematics/Arria10_soc.h"
 #include "../../fpga_hw/schematics/FPGA_fabric.h"
+#include "Arria_schematics/Arria10_soc.h"
 $includes_end;
 
 $module_begin("Arria10_top");

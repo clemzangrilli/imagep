@@ -1,0 +1,507 @@
+#====================================================================
+# Stratix10 Software Virtual Platform 
+# (c) 2016 Altera Corp.
+#
+# Extended parameters file - h/w configuration and low level settings
+#
+# Configuration parameters for the S10SWVP can be modified by the
+# user. Note that not all parameter configurations are valid. Also
+# parameter settings must align with the configuration of your 
+# software stack.
+#
+#====================================================================
+# ===================================================================
+# Low level controls
+# ===================================================================
+# ----------------------------------
+# SystemC timing model, loosely timed, approximately timed, [ LT AT ]
+# ----------------------------------
+tlm_timing_model = LT
+# ----------------------------------
+# Direct memory interface control
+# ----------------------------------
+dmi_enabled = 1
+# ----------------------------------
+# Misc
+# ----------------------------------
+pmr_reset_value = 0xFF
+physical_io:host_time_sync = 1
+
+# ===================================================================
+# Processor subsystem settings
+# ===================================================================
+top.stratix10_inst.CPU.cpu.periph_base = 0xFFFC0000
+# ----------------------------------
+# Coprocessor access control register
+# ----------------------------------
+cpacr_reset = 0xF00000
+# ----------------------------------
+# L2 Cache
+# ----------------------------------
+top.stratix10_inst.L2C.mem_level = 1
+top.stratix10_inst.L2C.cacheID = 2
+top.stratix10_inst.L2C.cache_size = 512
+top.stratix10_inst.L2C.line_size = 32
+top.stratix10_inst.L2C.associativity = 8
+top.stratix10_inst.L2C.virtual_indexing = 0
+top.stratix10_inst.L2C.write_hit_policy = WRITE_BACK
+top.stratix10_inst.L2C.write_miss_policy = ALLOC
+top.stratix10_inst.L2C.read_miss_policy = ALLOC
+top.stratix10_inst.L2C.replacement_policy = ROUND_ROBIN
+top.stratix10_inst.L2C.critical_word_first = DEFAULT
+top.stratix10_inst.L2C.address_filter_enable = 1
+#top.stratix10_inst.L2C.address_filter_start = 63
+top.stratix10_inst.L2C.address_filter_end = 4095
+top.stratix10_inst.L2C.address_filter_start = 1
+top.stratix10_inst.L2C.address_filter_end = 0xC00
+top.stratix10_inst.L2C.reset_latency = 1
+top.stratix10_inst.L2C.clear_interrupt_latency = 1
+top.stratix10_inst.L2C.transaction_start_latency = 3
+top.stratix10_inst.L2C.master_split_latency = 1
+top.stratix10_inst.L2C.store_buffer_latency = 1
+top.stratix10_inst.L2C.linefill_buffer_latency = 2
+top.stratix10_inst.L2C.nonBufferable_write_latency = 4
+top.stratix10_inst.L2C.mb_debug = 0
+
+# ===================================================================
+# Hardware configuration
+#
+# These settings are largely intended to be static, with some exceptions.
+# They are provided for experimentation purposes and to help document
+# details of the interconnect hierarchy.
+#
+# Some alternate settings may be invalid for the model and some may be
+# incompatible with the intended software stack.
+# ===================================================================
+
+# ===================================================================
+# Interconnect
+# ===================================================================
+# ----------------------------------
+# Level 3
+# ----------------------------------
+#SCHREGS
+top.stratix10_inst.l3_interconnect.axi_master2_base_address = 0x00000000
+top.stratix10_inst.l3_interconnect.axi_master2_size         = 0xC0000000
+top.stratix10_inst.l3_interconnect.axi_master2_subtract_base_address = 0x1
+top.stratix10_inst.SCHREGS.size_in_bytes = 0xC0000000
+top.stratix10_inst.SCHREGS_MEM.mb_debug = 0
+#FPGASLAVES
+top.stratix10_inst.l3_interconnect.axi_master1_base_address = 0xC0000000
+top.stratix10_inst.l3_interconnect.axi_master1_size = 0x3C000000
+top.stratix10_inst.l3_interconnect.axi_master1_subtract_base_address = 0x1
+#LWHPS2FPGAREGS
+top.stratix10_inst.l3_interconnect.axi_master5_base_address = 0xFF200000
+top.stratix10_inst.l3_interconnect.axi_master5_size = 0x00200000
+top.stratix10_inst.l3_interconnect.axi_master5_subtract_base_address = 0x1
+#OCRAM
+top.stratix10_inst.l3_interconnect.axi_master0_base_address = 0xFFE00000
+top.stratix10_inst.l3_interconnect.axi_master0_size = 0x00100000
+top.stratix10_inst.OCRAM.size_in_bytes = 0x00100000
+top.stratix10_inst.l3_interconnect.axi_master0_subtract_base_address = 0x1
+#L3_Interconnect (MPU Split Bus)
+top.stratix10_inst.mpu_split_bus.axi_master_l3_base_address = 0xFFFFFFFFFFFFFFFF
+top.stratix10_inst.mpu_split_bus.axi_master_l3_subtract_base_address = 0x0
+#L3_Interconnect (FPGA Split Bus)
+top.stratix10_inst.fpga_split_bus.axi_master_l3_base_address = 0xFFFFFFFFFFFFFFFF
+top.stratix10_inst.fpga_split_bus.axi_master_l3_subtract_base_address = 0x0
+# ----------------------------------
+# Level 4
+# ----------------------------------
+#L4_PER_Bus (MPU Split Bus)
+top.stratix10_inst.mpu_split_bus.apb_master_per_base_address = 0xFF800000
+top.stratix10_inst.mpu_split_bus.apb_master_per_size = 0x00300000
+top.stratix10_inst.mpu_split_bus.apb_master_per_additional_ranges \
+  = 0xFFC02000,0x000EE000; 0xFFDA0000,0x6000; 
+top.stratix10_inst.mpu_split_bus.apb_master_per_subtract_base_address = 0x0
+#L4_SYS_Bus (MPU Split Bus)
+top.stratix10_inst.mpu_split_bus.apb_master_sys_base_address = 0xFFCFA000
+top.stratix10_inst.mpu_split_bus.apb_master_sys_size = 0xA6000
+top.stratix10_inst.mpu_split_bus.apb_master_sys_subtract_base_address = 0x0
+#L4_PER_Bus (DMA Split Bus)
+top.stratix10_inst.dma_split_bus.apb_master_per_base_address = 0xFF800000
+top.stratix10_inst.dma_split_bus.apb_master_per_size = 0x00300000
+top.stratix10_inst.dma_split_bus.apb_master_per_additional_ranges \
+  = 0xFFC02000,0x000EE000; 0xFFDA0000,0x6000; 
+top.stratix10_inst.dma_split_bus.apb_master_per_subtract_base_address = 0x0
+#L4_SYS_Bus (DMA Split Bus)
+top.stratix10_inst.dma_split_bus.apb_master_sys_base_address = 0xFFCFA000
+top.stratix10_inst.dma_split_bus.apb_master_sys_size = 0xA6000
+top.stratix10_inst.dma_split_bus.apb_master_sys_subtract_base_address = 0x0
+#L3_Interconnect (DMA Split Bus)
+top.stratix10_inst.dma_split_bus.axi_master_l3_base_address = 0xFFFFFFFFFFFFFFFF
+top.stratix10_inst.dma_split_bus.axi_master_l3_subtract_base_address = 0x0
+#L4_PER_Bus (FPGA Split Bus)
+top.stratix10_inst.fpga_split_bus.apb_master_per_base_address = 0xFF800000
+top.stratix10_inst.fpga_split_bus.apb_master_per_size = 0x00300000
+top.stratix10_inst.fpga_split_bus.apb_master_per_additional_ranges \
+  = 0xFFC02000,0x000EE000; 0xFFDA0000,0x6000; 
+top.stratix10_inst.fpga_split_bus.apb_master_per_subtract_base_address = 0x0
+#L4_SYS_Bus (FPGA Split Bus)
+top.stratix10_inst.fpga_split_bus.apb_master_sys_base_address = 0xFFCFA000
+top.stratix10_inst.fpga_split_bus.apb_master_sys_size = 0xA6000
+top.stratix10_inst.fpga_split_bus.apb_master_sys_subtract_base_address = 0x0
+
+# ----------------------------------
+# Level 4 peripheral bus
+# ----------------------------------
+#EMAC0
+top.stratix10_inst.l4_per_bus.bus_master_emac0_base_address = 0xFF800000
+top.stratix10_inst.l4_per_bus.bus_master_emac0_size = 0x2000
+top.stratix10_inst.l4_per_bus.bus_master_emac0_subtract_base_address = 0x1
+#EMAC1 
+top.stratix10_inst.l4_per_bus.bus_master_emac1_base_address = 0xFF802000
+top.stratix10_inst.l4_per_bus.bus_master_emac1_size = 0x2000
+top.stratix10_inst.l4_per_bus.bus_master_emac1_subtract_base_address = 0x1
+#EMAC2 
+top.stratix10_inst.l4_per_bus.bus_master_emac2_base_address = 0xFF804000
+top.stratix10_inst.l4_per_bus.bus_master_emac2_size = 0x2000
+top.stratix10_inst.l4_per_bus.bus_master_emac2_subtract_base_address = 0x1
+#SDMMC 
+top.stratix10_inst.l4_per_bus.bus_master_sdmmc_base_address = 0xFF808000
+top.stratix10_inst.l4_per_bus.bus_master_sdmmc_size = 0x1000
+top.stratix10_inst.l4_per_bus.bus_master_sdmmc_subtract_base_address = 0x1
+#DWC_OTG1
+top.stratix10_inst.l3_interconnect.axi_master11_base_address = 0xFFB00000
+top.stratix10_inst.l3_interconnect.axi_master11_size = 0x40000
+top.stratix10_inst.l3_interconnect.axi_master11_subtract_base_address = 0x1
+#DWC_OTG2
+top.stratix10_inst.l3_interconnect.axi_master12_base_address = 0xFFB40000
+top.stratix10_inst.l3_interconnect.axi_master12_size = 0x40000
+top.stratix10_inst.l3_interconnect.axi_master12_subtract_base_address = 0x1
+#UART0 
+top.stratix10_inst.l4_per_bus.bus_master_uart0_base_address = 0xFFC02000
+top.stratix10_inst.l4_per_bus.bus_master_uart0_size = 0x100
+top.stratix10_inst.l4_per_bus.bus_master_uart0_subtract_base_address = 0x1
+#UART1 
+top.stratix10_inst.l4_per_bus.bus_master_uart1_base_address = 0xFFC02100
+top.stratix10_inst.l4_per_bus.bus_master_uart1_size = 0x100
+top.stratix10_inst.l4_per_bus.bus_master_uart1_subtract_base_address = 0x1
+#I2C0 
+top.stratix10_inst.l4_per_bus.bus_master_i2c0_base_address = 0xFFC02800
+top.stratix10_inst.l4_per_bus.bus_master_i2c0_size = 0x100
+top.stratix10_inst.l4_per_bus.bus_master_i2c0_subtract_base_address = 0x1
+#I2C1 
+top.stratix10_inst.l4_per_bus.bus_master_i2c1_base_address = 0xFFC02900
+top.stratix10_inst.l4_per_bus.bus_master_i2c1_size = 0x100
+top.stratix10_inst.l4_per_bus.bus_master_i2c1_subtract_base_address = 0x1
+#I2C2 
+top.stratix10_inst.l4_per_bus.bus_master_i2c2_base_address = 0xFFC02a00
+top.stratix10_inst.l4_per_bus.bus_master_i2c2_size = 0x100
+top.stratix10_inst.l4_per_bus.bus_master_i2c2_subtract_base_address = 0x1
+#I2C3 
+top.stratix10_inst.l4_per_bus.bus_master_i2c3_base_address = 0xFFC02b00
+top.stratix10_inst.l4_per_bus.bus_master_i2c3_size = 0x100
+top.stratix10_inst.l4_per_bus.bus_master_i2c3_subtract_base_address = 0x1
+#I2C4 
+top.stratix10_inst.l4_per_bus.bus_master_i2c4_base_address = 0xFFC02c00
+top.stratix10_inst.l4_per_bus.bus_master_i2c4_size = 0x100
+top.stratix10_inst.l4_per_bus.bus_master_i2c4_subtract_base_address = 0x1
+#SPTIMER0 
+top.stratix10_inst.l4_per_bus.bus_master_sptimer0_base_address = 0xFFC03000
+top.stratix10_inst.l4_per_bus.bus_master_sptimer0_size = 0x100
+top.stratix10_inst.l4_per_bus.bus_master_sptimer0_subtract_base_address = 0x1
+#SPTIMER1 
+top.stratix10_inst.l4_per_bus.bus_master_sptimer1_base_address = 0xFFC03100
+top.stratix10_inst.l4_per_bus.bus_master_sptimer1_size = 0x100
+top.stratix10_inst.l4_per_bus.bus_master_sptimer1_subtract_base_address = 0x1
+#GPIO0 
+top.stratix10_inst.l4_per_bus.bus_master_gpio0_base_address = 0xFFC03200
+top.stratix10_inst.l4_per_bus.bus_master_gpio0_size = 0x100
+top.stratix10_inst.l4_per_bus.bus_master_gpio0_subtract_base_address = 0x1
+#GPIO1 
+top.stratix10_inst.l4_per_bus.bus_master_gpio1_base_address = 0xFFC03300
+top.stratix10_inst.l4_per_bus.bus_master_gpio1_size = 0x100
+top.stratix10_inst.l4_per_bus.bus_master_gpio1_subtract_base_address = 0x1
+#DMAC NON SECURE
+top.stratix10_inst.l4_per_bus.bus_master_dmanonsecure_base_address = 0xFFDA0000
+top.stratix10_inst.l4_per_bus.bus_master_dmanonsecure_size = 0x1000
+top.stratix10_inst.l4_per_bus.bus_master_dmanonsecure_subtract_base_address = 0x1
+#DMAC SECURE
+top.stratix10_inst.l4_per_bus.bus_master_dmasecure_base_address = 0xFFDA1000
+top.stratix10_inst.l4_per_bus.bus_master_dmasecure_size = 0x1000
+top.stratix10_inst.l4_per_bus.bus_master_dmasecure_subtract_base_address = 0x1
+#SPIS0 
+top.stratix10_inst.l4_per_bus.bus_master_spi0_base_address = 0xFFDA2000
+top.stratix10_inst.l4_per_bus.bus_master_spi0_size = 0x1000
+top.stratix10_inst.l4_per_bus.bus_master_spi0_subtract_base_address = 0x1
+top.stratix10_inst.SPIS0.is_slave_mode = 1
+#SPIS1 
+top.stratix10_inst.l4_per_bus.bus_master_spi1_base_address = 0xFFDA3000
+top.stratix10_inst.l4_per_bus.bus_master_spi1_size = 0x1000
+top.stratix10_inst.l4_per_bus.bus_master_spi1_subtract_base_address = 0x1
+top.stratix10_inst.SPIS1.is_slave_mode = 1
+#SPIM0 
+top.stratix10_inst.l4_per_bus.bus_master_spi2_base_address = 0xFFDA4000
+top.stratix10_inst.l4_per_bus.bus_master_spi2_size = 0x1000
+top.stratix10_inst.l4_per_bus.bus_master_spi2_subtract_base_address = 0x1
+top.stratix10_inst.SPIM0.is_slave_mode = 0
+#SPIM1 
+top.stratix10_inst.l4_per_bus.bus_master_spi3_base_address = 0xFFDA5000
+top.stratix10_inst.l4_per_bus.bus_master_spi3_size = 0x1000
+top.stratix10_inst.l4_per_bus.bus_master_spi3_subtract_base_address = 0x1
+top.stratix10_inst.SPIM1.is_slave_mode = 0
+# ----------------------------------
+# Level 4 system bus
+# ----------------------------------
+#HMCREGS 
+top.stratix10_inst.l4_sys_bus.bus_master_hmcregs_base_address = 0xFFCFA000
+top.stratix10_inst.l4_sys_bus.bus_master_hmcregs_size = 0x1000
+top.stratix10_inst.l4_sys_bus.bus_master_hmcregs_subtract_base_address = 0x1
+#HMCAREGS 
+top.stratix10_inst.l4_sys_bus.bus_master_hmcaregs_base_address = 0xFFCFB000
+top.stratix10_inst.l4_sys_bus.bus_master_hmcaregs_size = 0x1000
+top.stratix10_inst.l4_sys_bus.bus_master_hmcaregs_subtract_base_address = 0x1
+#FPGAMGR DATA
+top.stratix10_inst.l4_sys_bus.bus_master_fpgamgrdata_base_address = 0xFFCFE400
+top.stratix10_inst.l4_sys_bus.bus_master_fpgamgrdata_size = 0x400
+top.stratix10_inst.l4_sys_bus.bus_master_fpgamgrdata_subtract_base_address = 0x1
+#OSC1TIMER0 
+top.stratix10_inst.l4_sys_bus.bus_master_osc1timer0_base_address = 0xFFD00000
+top.stratix10_inst.l4_sys_bus.bus_master_osc1timer0_size = 0x100
+top.stratix10_inst.l4_sys_bus.bus_master_osc1timer0_subtract_base_address = 0x1
+#OSC1TIMER1 
+top.stratix10_inst.l4_sys_bus.bus_master_osc1timer1_base_address = 0xFFD00100
+top.stratix10_inst.l4_sys_bus.bus_master_osc1timer1_size = 0x100
+top.stratix10_inst.l4_sys_bus.bus_master_osc1timer1_subtract_base_address = 0x1
+#L4WD0 
+top.stratix10_inst.l4_sys_bus.bus_master_l4wd0_base_address = 0xFFD00200
+top.stratix10_inst.l4_sys_bus.bus_master_l4wd0_size = 0x100
+top.stratix10_inst.l4_sys_bus.bus_master_l4wd0_subtract_base_address = 0x1
+#L4WD1 
+top.stratix10_inst.l4_sys_bus.bus_master_l4wd1_base_address = 0xFFD00300
+top.stratix10_inst.l4_sys_bus.bus_master_l4wd1_size = 0x100
+top.stratix10_inst.l4_sys_bus.bus_master_l4wd1_subtract_base_address = 0x1
+#FPGAMGRREGS
+top.stratix10_inst.l4_sys_bus.bus_master_fpgamgrregs_base_address = 0xFFD03000
+top.stratix10_inst.l4_sys_bus.bus_master_fpgamgrregs_size = 0x1000
+top.stratix10_inst.l4_sys_bus.bus_master_fpgamgrregs_subtract_base_address = 0x1
+#CLKMGR
+top.stratix10_inst.l4_sys_bus.bus_master_clkmgr_base_address = 0xFFD10000
+top.stratix10_inst.l4_sys_bus.bus_master_clkmgr_size = 0x1000
+top.stratix10_inst.l4_sys_bus.bus_master_clkmgr_subtract_base_address = 0x1
+#RSTMGR
+top.stratix10_inst.l4_sys_bus.bus_master_rstmgr_base_address = 0xFFD11000
+top.stratix10_inst.l4_sys_bus.bus_master_rstmgr_size = 0x1000
+top.stratix10_inst.l4_sys_bus.bus_master_rstmgr_subtract_base_address = 0x1
+#SYSMGR_CORE   
+top.stratix10_inst.l4_sys_bus.bus_master_sysmgr_base_address = 0xFFD12000
+top.stratix10_inst.l4_sys_bus.bus_master_sysmgr_size = 0x1000
+top.stratix10_inst.l4_sys_bus.bus_master_sysmgr_subtract_base_address = 0x1
+#IOMGR
+top.stratix10_inst.l4_sys_bus.bus_master_iomgr_base_address = 0xFFD13000
+top.stratix10_inst.l4_sys_bus.bus_master_iomgr_size = 0x1000
+top.stratix10_inst.l4_sys_bus.bus_master_iomgr_subtract_base_address = 0x1
+#SCHREGS
+top.stratix10_inst.l4_sys_bus.bus_master_schregs_base_address = 0xFFD14000
+top.stratix10_inst.l4_sys_bus.bus_master_schregs_size = 0x80
+top.stratix10_inst.l4_sys_bus.bus_master_schregs_subtract_base_address = 0x1
+
+
+#FWL4PER
+top.stratix10_inst.l4_sys_bus.bus_master_fwl4per_base_address = 0xFFD15000
+top.stratix10_inst.l4_sys_bus.bus_master_fwl4per_size = 0x100
+top.stratix10_inst.l4_sys_bus.bus_master_fwl4per_subtract_base_address = 0x1
+#FWL4SYS
+top.stratix10_inst.l4_sys_bus.bus_master_fwl4sys_base_address = 0xFFD15100
+top.stratix10_inst.l4_sys_bus.bus_master_fwl4sys_size = 0x100
+top.stratix10_inst.l4_sys_bus.bus_master_fwl4sys_subtract_base_address = 0x1
+#FWOCRAM
+top.stratix10_inst.l4_sys_bus.bus_master_fwocram_base_address = 0xFFD15200
+top.stratix10_inst.l4_sys_bus.bus_master_fwocram_size         = 0x100
+top.stratix10_inst.l4_sys_bus.bus_master_fwocram_subtract_base_address = 0x1
+#FWFPGA2SDRAM
+top.stratix10_inst.l4_sys_bus.bus_master_fwfpga2sdram_base_address = 0xFFD15300
+top.stratix10_inst.l4_sys_bus.bus_master_fwfpga2sdram_size = 0x100
+top.stratix10_inst.l4_sys_bus.bus_master_fwfpga2sdram_subtract_base_address = 0x1
+#FWDDRL3
+top.stratix10_inst.l4_sys_bus.bus_master_fwddrl3_base_address = 0xFFD15400
+top.stratix10_inst.l4_sys_bus.bus_master_fwddrl3_size = 0x100
+top.stratix10_inst.l4_sys_bus.bus_master_fwddrl3_subtract_base_address = 0x1
+#FWHPS2FPGA
+top.stratix10_inst.l4_sys_bus.bus_master_fwhps2fpga_base_address = 0xFFD15500
+top.stratix10_inst.l4_sys_bus.bus_master_fwhps2fpga_size = 0x100
+top.stratix10_inst.l4_sys_bus.bus_master_fwhps2fpga_subtract_base_address = 0x1
+
+
+# ----------------------------------
+# Clocks
+# ----------------------------------
+clock            =  2 NS
+axi_clock        =  2 NS
+signal_clock     =  2 NS
+generic_clock    =  8 NS
+periph_clock     = 10 NS
+ahb_master_clock =  8 NS
+ahb_slave_clock  =  8 NS
+
+Arria10_top.OSC1TIMER0.clock   = 40 NS
+Arria10_top.OSC1TIMER1.clock   = 40 NS
+Arria10_top.SPTIMER0.clock     = 10 NS
+Arria10_top.SPTIMER1.clock     = 10 NS
+Arria10_top.UART0.UART_REF_CLK = 10 NS
+Arria10_top.UART1.UART_REF_CLK = 10 NS
+# ===================================================================
+# Dummy ports
+# ===================================================================
+top.stratix10_inst.l3_interconnect.ahb_master0_base_address  = 0xFFFD0000
+top.stratix10_inst.l3_interconnect.ahb_master1_base_address  = 0xFFFD0004
+top.stratix10_inst.l3_interconnect.apb_master0_base_address  = 0xFFFD0008
+top.stratix10_inst.l3_interconnect.apb_master1_base_address  = 0xFFFD000c
+top.stratix10_inst.l3_interconnect.apb_master2_base_address  = 0xFFFD0010
+top.stratix10_inst.l3_interconnect.apb_master3_base_address  = 0xFFFD0014
+top.stratix10_inst.l3_interconnect.apb_master5_base_address  = 0xFFFD0018
+top.stratix10_inst.l3_interconnect.axi_master3_base_address  = 0xFFFD001c
+top.stratix10_inst.l3_interconnect.axi_master4_base_address  = 0xFFFD0020
+top.stratix10_inst.l3_interconnect.axi_master6_base_address  = 0xFFFD0024
+top.stratix10_inst.l3_interconnect.axi_master7_base_address  = 0xFFFD0028
+top.stratix10_inst.l3_interconnect.axi_master8_base_address  = 0xFFFD002c
+top.stratix10_inst.l3_interconnect.axi_master9_base_address  = 0xFFFD0030
+
+top.stratix10_inst.l3_interconnect.axi_master10_base_address = 0xFFFD0034
+top.stratix10_inst.l3_interconnect.apb_master4_base_address  = 0xFFFD0038
+top.stratix10_inst.l3_interconnect.apb_master4_size = 0x20
+
+top.stratix10_inst.l3_interconnect.ahb_master0_size  = 0x4
+top.stratix10_inst.l3_interconnect.ahb_master1_size  = 0x4
+
+top.stratix10_inst.l3_interconnect.apb_master0_size  = 0x4
+top.stratix10_inst.l3_interconnect.apb_master1_size  = 0x4
+top.stratix10_inst.l3_interconnect.apb_master2_size  = 0x4
+top.stratix10_inst.l3_interconnect.apb_master3_size  = 0x4
+top.stratix10_inst.l3_interconnect.apb_master5_size  = 0x4
+
+top.stratix10_inst.l3_interconnect.axi_master3_size  = 0x4
+top.stratix10_inst.l3_interconnect.axi_master4_size  = 0x4
+top.stratix10_inst.l3_interconnect.axi_master6_size  = 0x4
+top.stratix10_inst.l3_interconnect.axi_master7_size  = 0x4
+top.stratix10_inst.l3_interconnect.axi_master8_size  = 0x4
+top.stratix10_inst.l3_interconnect.axi_master9_size  = 0x4
+top.stratix10_inst.l3_interconnect.axi_master10_size = 0x4
+
+# ===================================================================
+# Port settings
+# ===================================================================
+# ----------------------------------
+# Manager IP
+# ----------------------------------
+top.stratix10_inst.FWL4SYS.clock_manager_port          = bus_master_clkmgr
+top.stratix10_inst.FWL4SYS.fpga_manager_register_port  = bus_master_fpgamgrregs
+top.stratix10_inst.FWL4SYS.fpga_manager_streaming_port = bus_master_fpgamgrdata
+top.stratix10_inst.FWL4SYS.pin_mux_register_port       = bus_master_iomgr
+top.stratix10_inst.FWL4SYS.reset_manager_port          = bus_master_rstmgr
+top.stratix10_inst.FWL4SYS.system_manager_core_port    = bus_master_sysmgr
+# ----------------------------------
+# Misc
+# ----------------------------------
+top.stratix10_inst.FWL4SYS.hmc_register_port         = bus_master_hmcregs
+top.stratix10_inst.FWL4SYS.hmc_adaptor_register_port = bus_master_hmcaregs
+
+top.stratix10_inst.FWL4SYS.ddr_scheduler_register_port = bus_master_schregs
+
+top.stratix10_inst.FWL4SYS.l4_interconnect_firewall_csr_per_port = bus_master_fwl4per
+top.stratix10_inst.FWL4SYS.l4_interconnect_firewall_csr_sys_port = bus_master_fwl4sys
+# ----------------------------------
+# Masters, system and peripheral
+# ----------------------------------
+top.stratix10_inst.FWL4SYS.mpu_master_port = bus_slave_mpu
+top.stratix10_inst.FWL4SYS.dma_master_port = bus_slave_dmac
+top.stratix10_inst.FWL4SYS.f2s_master_port = bus_slave_fpgabridg
+top.stratix10_inst.FWL4SYS.ahb_master_port = bus_slave_dap
+top.stratix10_inst.FWL4SYS.etr_master_port = bus_slave_etr
+
+top.stratix10_inst.FWL4PER.mpu_master_port = bus_slave_mpu
+top.stratix10_inst.FWL4PER.dma_master_port = bus_slave_dmac
+top.stratix10_inst.FWL4PER.f2s_master_port = bus_slave_fpgabridg
+top.stratix10_inst.FWL4PER.ahb_master_port = bus_slave_dap
+# ----------------------------------
+# Peripherals 
+# ----------------------------------
+top.stratix10_inst.FWL4SYS.osc0_timer_port = bus_master_osc1timer0
+top.stratix10_inst.FWL4SYS.osc1_timer_port = bus_master_osc1timer1
+top.stratix10_inst.FWL4SYS.whatchdog0_port = bus_master_l4wd0
+top.stratix10_inst.FWL4SYS.whatchdog1_port = bus_master_l4wd1
+
+top.stratix10_inst.FWL4PER.dma_nonsecure_port = bus_master_dmanonsecure
+top.stratix10_inst.FWL4PER.dma_secure_port    = bus_master_dmasecure
+
+top.stratix10_inst.FWL4PER.spi_master0_port = bus_master_spi2
+top.stratix10_inst.FWL4PER.spi_master1_port = bus_master_spi3
+top.stratix10_inst.FWL4PER.spi_slave0_port  = bus_master_spi0
+top.stratix10_inst.FWL4PER.spi_slave1_port  = bus_master_spi1
+
+top.stratix10_inst.FWL4PER.emac0_port = bus_master_emac0
+top.stratix10_inst.FWL4PER.emac1_port = bus_master_emac1
+top.stratix10_inst.FWL4PER.emac2_port = bus_master_emac2
+
+top.stratix10_inst.FWL4PER.sdmmc_port = bus_master_sdmmc
+
+top.stratix10_inst.FWL4PER.gpio0_port = bus_master_gpio0
+top.stratix10_inst.FWL4PER.gpio1_port = bus_master_gpio1
+
+top.stratix10_inst.FWL4PER.i2c0_port = bus_master_i2c0
+top.stratix10_inst.FWL4PER.i2c1_port = bus_master_i2c1
+top.stratix10_inst.FWL4PER.i2c2_port = bus_master_i2c2
+top.stratix10_inst.FWL4PER.i2c3_port = bus_master_i2c3
+top.stratix10_inst.FWL4PER.i2c4_port = bus_master_i2c4
+
+top.stratix10_inst.FWL4PER.sp_timer0_port = bus_master_sptimer0
+top.stratix10_inst.FWL4PER.sp_timer1_port = bus_master_sptimer1
+top.stratix10_inst.FWL4PER.uart0_port = bus_master_uart0
+top.stratix10_inst.FWL4PER.uart1_port = bus_master_uart1
+# ----------------------------------
+# AXI/APB 
+# ----------------------------------
+#top.stratix10_inst.l3_interconnect.axi_master3_base_address  = 0xFFD16900
+#top.stratix10_inst.l3_interconnect.axi_master4_base_address  = 0xFFD16900
+#top.stratix10_inst.l3_interconnect.axi_master6_base_address  = 0xFFD16900
+#top.stratix10_inst.l3_interconnect.axi_master7_base_address  = 0xFFD16900
+#top.stratix10_inst.l3_interconnect.axi_master8_base_address  = 0xFFD16900
+#top.stratix10_inst.l3_interconnect.axi_master10_base_address = 0xFFD16900
+#top.stratix10_inst.l3_interconnect.apb_master0_base_address  = 0xFFD16900
+#top.stratix10_inst.l3_interconnect.apb_master1_base_address  = 0xFFD16900
+#top.stratix10_inst.l3_interconnect.apb_master2_base_address  = 0xFFD16900
+#top.stratix10_inst.l3_interconnect.apb_master3_base_address  = 0xFFD16900
+#top.stratix10_inst.l3_interconnect.registers_block_base_address = 0xFFD16900
+# ----------------------------------
+# Unused
+# ----------------------------------
+top.stratix10_inst.FWL4SYS.can0_ecc_port =
+top.stratix10_inst.FWL4SYS.can1_ecc_port =
+top.stratix10_inst.FWL4SYS.dma_ecc_port =
+top.stratix10_inst.FWL4SYS.emac0rx_ecc_port =
+top.stratix10_inst.FWL4SYS.emac0tx_ecc_port =
+top.stratix10_inst.FWL4SYS.emac1rx_ecc_port =
+top.stratix10_inst.FWL4SYS.emac1tx_ecc_port =
+top.stratix10_inst.FWL4SYS.emac2rx_ecc_port =
+top.stratix10_inst.FWL4SYS.emac2tx_ecc_port =
+top.stratix10_inst.FWL4SYS.emac3rx_ecc_port =
+top.stratix10_inst.FWL4SYS.emac3tx_ecc_port =
+top.stratix10_inst.FWL4SYS.nand_ecc_port =
+top.stratix10_inst.FWL4SYS.nand_read_ecc_port =
+top.stratix10_inst.FWL4SYS.nand_write_ecc_port =
+top.stratix10_inst.FWL4SYS.onchipram_ecc_port =
+top.stratix10_inst.FWL4SYS.sdmmc_ecc_port =
+top.stratix10_inst.FWL4SYS.usb0_ecc_port =
+top.stratix10_inst.FWL4SYS.usb1_ecc_port =
+top.stratix10_inst.FWL4SYS.dap_port =
+top.stratix10_inst.FWL4SYS.security_manager_streaming_port =
+top.stratix10_inst.FWL4SYS.l3_interconnect_register_port =
+top.stratix10_inst.FWL4SYS.l4_interconnect_probes_csr_port =
+top.stratix10_inst.FWL4SYS.l4_qos_csr_port =
+
+top.stratix10_inst.FWL4PER.nand_register_port =
+top.stratix10_inst.FWL4PER.nand_data_port =
+top.stratix10_inst.FWL4PER.usb0_register_port =
+top.stratix10_inst.FWL4PER.usb1_register_port =
+# ----------------------------------
+# Deprecated switches
+# ----------------------------------
+#cache_control = software
+#verbose=IRQ|WRITE|READ
+#verbose_file = verbose.txt
+#top.stratix10_inst.consol_UART1.connected= 0
+#report_warning = 0
+#report_error   = 0
+#ignore_warnings = 0
+#top.stratix10_inst.FWL4PER.emac3_port = 
