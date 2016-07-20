@@ -1,4 +1,4 @@
-#!/bin/sh 
+#!/bin/bash 
 
 # This script is based on Mentor Graphics' work
 # Simplified the user interface and the file location expectations.
@@ -66,13 +66,17 @@ EOT
 }
 
 # Script starts here
-if [ "${1}" == "-h" -o -z "${KERNEL}" -o -z "${DTB}" -o -z "${INITRD}" ] ; then
+if [ "${1}" == "-h" -o -z "${KERNEL}" -o -z "${DTB}" ] ; then
   usage
   exit 1
 fi
 
+if [ -z "${INITRD}" ] ; then
+   echo "${SELF}: info: no initrd specified"
+fi
+
 # build steps
-make clean
+make DTB="${DTB}" clean
 make DTB="${DTB}" KERNEL="${KERNEL}" FILESYSTEM="${INITRD}" \
      CROSS_COMPILE="${CROSS_COMPILE}"
 if [ $? -ne 0 ] ; then

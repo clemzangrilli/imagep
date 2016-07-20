@@ -49,10 +49,6 @@ _start:
 	str	w0, [x1], #4
 	str	w0, [x1], #4
 	str	w0, [x1], #4
-	str	w0, [x1], #4
-	str	w0, [x1], #4
-	str	w0, [x1], #4
-	str	w0, [x1], #4
 
 2:	ldr	x1, =GIC_CPU_BASE		// GICC_CTLR
 	ldr	w0, [x1]
@@ -62,19 +58,19 @@ _start:
 	mov	w0, #1 << 7			// allow NS access to GICC_PMR
 	str	w0, [x1, #4]			// GICC_PMR
 
-//TODO	msr	sctlr_el2, xzr
+	msr	sctlr_el2, xzr
 
 	/*
 	 * Prepare the switch to the EL2_SP1 mode from EL3
 	 */
 	ldr	x0, =start_ns			// Return after mode switch
-//TODO	mov	x1, #0x3c9			// EL2_SP1 | D | A | I | F
-	mov	x1, #0x3c5                      // EL1_SP1 | D | A | I | F
+	mov	x1, #0x3c9			// EL2_SP1 | D | A | I | F
 	msr	elr_el3, x0
 	msr	spsr_el3, x1
 	eret
 
 start_ns:
+	mrs     x0, CurrentEL			// for debugging
 	/*
 	 * Kernel parameters
 	 */
